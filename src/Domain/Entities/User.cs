@@ -13,6 +13,7 @@ namespace Domain.Entities
     public class User
     {
         private List<Booking> _bookings;
+
         public int Id { get; set; }
         public string Name { get; set; }
         public Rol Rol { get; set; }
@@ -22,6 +23,18 @@ namespace Domain.Entities
         public bool State { get; set; }
         public Subscription Subscription { get; set; }
         public IReadOnlyCollection<Booking> Bookings => _bookings;
+
+        public User(string name, string email, string password, int phoneNumber, Rol rol)
+        {
+            Name = name;
+            Email = email;
+            Password = password;
+            PhoneNumber = phoneNumber;
+            Rol = rol;
+        }
+
+
+
         public void AddBooking(Booking booking)
         {
             //Reglas de negocios

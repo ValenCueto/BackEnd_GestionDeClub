@@ -1,3 +1,7 @@
+using Application.Services;
+using Domain.Interfaces;
+using Infrastructure.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,6 +19,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+#region Repositories
+builder.Services.AddScoped<IBaseRepository, BaseRepository>();
+#endregion
+
+#region services
+builder.Services.AddScoped<IUserService, UserService>();
+
+#endregion
 
 app.UseHttpsRedirection();
 
