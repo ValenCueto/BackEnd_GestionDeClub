@@ -40,7 +40,7 @@ namespace Domain.Entities
             //Reglas de negocios
             //Validar estado, subscripcion
 
-            Bookings.Add(booking);
+            //Bookings.Add(booking);
         }
         
     }

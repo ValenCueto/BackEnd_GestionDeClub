@@ -14,8 +14,8 @@ namespace Domain.Entities
  
         public int Id { get; set; }
         public float Price {  get; set; }
-        public Date Month {  get; set; }
-        public Date Year { get; set; }
+        public DateOnly Month {  get; set; }
+        public DateOnly Year { get; set; }
 
     }
 }
