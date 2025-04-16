@@ -1,4 +1,5 @@
-﻿using Application.Models.Request;
+﻿using Application.Interfaces;
+using Application.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -8,12 +9,16 @@ namespace Web.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserCreateRequest request)
         {
-            var result = _userService.CreateUser(request);
-            return Ok(result);
+             _userService.CreateUser(request);
+            return Ok("ok");
         }
     }
 }

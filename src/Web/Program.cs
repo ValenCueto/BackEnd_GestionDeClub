@@ -1,3 +1,4 @@
+using Application.Interfaces;
 using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.Data;
@@ -19,6 +20,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+#region Repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+#endregion
+
+#region services
+builder.Services.AddScoped<IUserService, UserService>();
+
+#endregion
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -27,14 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-#region Repositories
-builder.Services.AddScoped<IBaseRepository, BaseRepository>();
-#endregion
 
-#region services
-builder.Services.AddScoped<IUserService, UserService>();
-
-#endregion
 
 app.UseHttpsRedirection();
 

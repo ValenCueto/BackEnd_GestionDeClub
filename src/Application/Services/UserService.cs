@@ -15,11 +15,22 @@ namespace Application.Services
     {
         private readonly IUserRepository _userRepository;
 
-        public UserDtoResponse CreateUser(UserCreateRequest request)
+        public UserService(IUserRepository userRepository)
         {
-            User newUser = new User(request.Name, request.Email, request.Password , request.PhoneNumber, request.Rol);
+            _userRepository = userRepository;
+        }
+        public void CreateUser(UserCreateRequest request)
+        {
+            var newUser = new User(
+            request.Name,
+            request.Email,
+            request.Password,
+            request.PhoneNumber,
+            request.Rol
+        );
+
             _userRepository.Add(newUser);
-            return UserDtoResponse.Create(newUser);
+            //return UserDtoResponse.Create(newUser);
         }
 
  

@@ -10,6 +10,6 @@ namespace Application.Interfaces
 {
     public interface IUserService
     {
-        UserDtoResponse CreateUser(UserCreateRequest request);
+        void CreateUser(UserCreateRequest request);
     }
 }

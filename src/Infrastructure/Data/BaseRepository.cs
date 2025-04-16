@@ -19,13 +19,13 @@ namespace Infrastructure.Data
 
         public void Add(T entity) 
         { 
-            _dbContext.Set<T>.Add(entity);
+            _dbContext.Set<T>().Add(entity);
             _dbContext.SaveChanges();
         }
 
         public void Delete(T entity)
         {
-            _dbContext.Set<T>.Delete(entity);
+            _dbContext.Set<T>().Remove(entity);
             _dbContext.SaveChanges();
         }
         public virtual T? GetById<TId>(TId id)
