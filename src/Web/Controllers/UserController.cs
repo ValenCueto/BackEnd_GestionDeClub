@@ -20,5 +20,24 @@ namespace Web.Controllers
              _userService.CreateUser(request);
             return Ok("ok");
         }
+
+        [HttpPost("UpdateUser")]
+        public IActionResult UpdateUser([FromBody] UserCreateRequest request, int userId)
+        {
+            try
+            {
+                _userService.UpdateUser(request, userId);
+                return Ok("Usuario editado exitosamente");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
+
+
+
     }
 }

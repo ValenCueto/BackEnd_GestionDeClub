@@ -11,5 +11,6 @@ namespace Application.Interfaces
     public interface IUserService
     {
         void CreateUser(UserCreateRequest request);
+        void UpdateUser(UserCreateRequest request, int userId);
     }
 }
