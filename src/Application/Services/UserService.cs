@@ -33,6 +33,19 @@ namespace Application.Services
             //return UserDtoResponse.Create(newUser);
         }
 
- 
+        public void DeleteUser(int userId)
+        {
+            User userToDelete = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El user {userId} no fué encontrado");
+            _userRepository.Delete(userToDelete);
+        }
+
+        public void DeactivateUser(int userId)
+        {
+            User userToDeactivate = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El user {userId} no fué encontrado");
+            userToDeactivate.State = false;
+            _userRepository.Update(userToDeactivate);
+        }
+
+
     }
 }

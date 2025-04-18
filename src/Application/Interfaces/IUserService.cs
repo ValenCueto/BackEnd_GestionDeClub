@@ -11,5 +11,7 @@ namespace Application.Interfaces
     public interface IUserService
     {
         void CreateUser(UserCreateRequest request);
+        void DeleteUser(int userId);
+        void DeactivateUser(int userId);
     }
 }
