@@ -70,9 +70,14 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 #endregion
 
 #region services
+// Configuración de las opciones de autenticación
 builder.Services.Configure<AuthenticationService.AuthenticationServiceOptions>(
     builder.Configuration.GetSection(AuthenticationService.AuthenticationServiceOptions.AuthenticationService));
+
+
+// Registro de servicios
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>();
 
 #endregion
 
