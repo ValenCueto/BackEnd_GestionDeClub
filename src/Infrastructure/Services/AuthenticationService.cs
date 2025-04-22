@@ -1,5 +1,7 @@
-﻿using Application.Models.Request;
+﻿using Application.Interfaces;
+using Application.Models.Request;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService : ICustomAuthenticationService
     {
         private readonly IUserRepository _userRepository;
         private readonly AuthenticationServiceOptions _options;
@@ -33,7 +35,7 @@ namespace Infrastructure.Services
 
             if (user == null) return null;
 
-            if (!user.IsActive)
+            if (!user.State)  //user.IsActive SE CAMBIO POR STATE
             {
                 throw new UnauthorizedException("La cuenta del usuario no está activa.");
             }

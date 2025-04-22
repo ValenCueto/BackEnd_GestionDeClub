@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
+using Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
