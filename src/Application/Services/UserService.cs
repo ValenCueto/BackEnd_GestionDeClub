@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
@@ -55,6 +56,17 @@ namespace Application.Services
             _userRepository.Update(userToDeactivate);
         }
 
+        public List<UserDtoResponse> GetAll()
+        {
+            List<User> users = _userRepository.GetAll() ?? throw new Exception("No hay usuarios");
+            List<UserDtoResponse> usersFiltered = new List<UserDtoResponse>();
+            foreach (User user in users)
+            {
+                UserDtoResponse userFiltered =  UserDtoResponse.Create(user);
+                usersFiltered.Add(userFiltered);
+            }
 
+            return usersFiltered;
+        }
     }
 }
