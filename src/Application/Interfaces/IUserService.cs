@@ -12,5 +12,7 @@ namespace Application.Interfaces
     {
         void CreateUser(UserCreateRequest request);
         void UpdateUser(UserCreateRequest request, int userId);
+        void DeleteUser(int userId);
+        void DeactivateUser(int userId);
     }
 }
