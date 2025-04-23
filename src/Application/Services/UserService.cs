@@ -28,11 +28,20 @@ namespace Application.Services
             request.PhoneNumber,
             request.Rol
         );
-
             _userRepository.Add(newUser);
-            //return UserDtoResponse.Create(newUser);
         }
 
+        public void UpdateUser(UserCreateRequest request, int userId)
+        {
+            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
+            userToEdit.Name = request.Name;
+            userToEdit.Email = request.Email;
+            userToEdit.Password = request.Password;
+            userToEdit.PhoneNumber = request.PhoneNumber;
+            userToEdit.Rol = request.Rol;
+
+            _userRepository.Update(userToEdit);
+        }
         public void DeleteUser(int userId)
         {
             User userToDelete = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El user {userId} no fué encontrado");

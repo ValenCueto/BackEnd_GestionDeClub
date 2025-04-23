@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
+using Domain.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,9 +19,37 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult CreateUser([FromBody] UserCreateRequest request)
         {
+            try
+            {
+                _userService.CreateUser(request);
+                return Ok("Usuario creado exitosamente");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+         [HttpPost("UpdateUser")]
+        public IActionResult UpdateUser([FromBody] UserCreateRequest request, int userId)
+        {
+            try 
+            {
+                _userService.UpdateUser(request,userId);
+                return Ok("Usuario editado exitosamente");
+            }
+            catch (Exception ex) 
+            {
+                return BadRequest(ex);
+            }
             _userService.CreateUser(request);
             return Ok("ok");
         }
+
+
+
+
+
 
 
         [HttpDelete]

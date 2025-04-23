@@ -12,7 +12,6 @@ namespace Infrastructure.Data
             : base(options)
         {
         }
-
         public DbSet<User> Users { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Court> Courts { get; set; }
@@ -24,8 +23,7 @@ namespace Infrastructure.Data
         {
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Subscription)
-                .WithOne()
-                .HasForeignKey<Subscription>(s => s.Id);
+                .WithOne();
 
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User);
