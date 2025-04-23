@@ -67,6 +67,7 @@ builder.Services.AddAuthentication("Bearer")
 
 #region Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 #endregion
 
 #region services
@@ -77,6 +78,7 @@ builder.Services.Configure<AuthenticationService.AuthenticationServiceOptions>(
 
 // Registro de servicios
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>();
 
 #endregion
