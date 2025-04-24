@@ -76,7 +76,7 @@ namespace Infrastructure.Services
               _options.Audience,
               claimsForToken,
               DateTime.UtcNow,
-              DateTime.UtcNow.AddHours(1),
+              DateTime.UtcNow.AddMinutes(_options.TokenExpirationMinutes),
               credentials);
 
             var tokenToReturn = new JwtSecurityTokenHandler() //Pasamos el token a string
@@ -93,6 +93,8 @@ namespace Infrastructure.Services
             public string Issuer { get; set; }
             public string Audience { get; set; }
             public string SecretForKey { get; set; }
+
+            public int TokenExpirationMinutes { get; set; }
         }
     }
 }
