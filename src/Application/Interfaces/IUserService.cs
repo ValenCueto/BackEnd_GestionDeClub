@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Models.Request;
 using Application.Models.Response;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
@@ -14,5 +15,6 @@ namespace Application.Interfaces
         void UpdateUser(UserCreateRequest request, int userId);
         void DeleteUser(int userId);
         void DeactivateUser(int userId);
+        List<UserDtoResponse> GetAll();
     }
 }

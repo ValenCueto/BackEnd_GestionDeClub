@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
+using Application.Models.Response;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace Web.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
+        [HttpPost("CreateUser")]
         public IActionResult CreateUser([FromBody] UserCreateRequest request)
         {
             try
@@ -30,7 +31,7 @@ namespace Web.Controllers
             }
         }
 
-         [HttpPost("UpdateUser")]
+        [HttpPost("UpdateUser")]
         public IActionResult UpdateUser([FromBody] UserCreateRequest request, int userId)
         {
             try 
@@ -42,15 +43,7 @@ namespace Web.Controllers
             {
                 return BadRequest(ex);
             }
-            _userService.CreateUser(request);
-            return Ok("ok");
         }
-
-
-
-
-
-
 
         [HttpDelete]
         public IActionResult DeleteUser([FromBody] int userId)
@@ -77,6 +70,20 @@ namespace Web.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetAllUsers")]
+        public IActionResult GetAllUsers()
+        {
+            try
+            {
+                List<UserDtoResponse> users = _userService.GetAll();
+                return Ok(users);
+            }
+            catch (Exception ex) 
+            { 
+                return BadRequest(ex);
             }
         }
     }
