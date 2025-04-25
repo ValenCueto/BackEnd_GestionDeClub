@@ -10,5 +10,6 @@ namespace Domain.Interfaces
     public interface IUserRepository: IBaseRepository<User>
     {
         User? GetByName(string userName);
+        User? GetByEmail(string email);
     }
 }

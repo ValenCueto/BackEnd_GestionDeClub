@@ -28,10 +28,10 @@ namespace Infrastructure.Services
 
         private User? ValidateUser(AuthenticationRequest authenticationRequest)
         {
-            if (string.IsNullOrEmpty(authenticationRequest.UserName) || string.IsNullOrEmpty(authenticationRequest.Password))
+            if (string.IsNullOrEmpty(authenticationRequest.Email) || string.IsNullOrEmpty(authenticationRequest.Password))
                 return null;
 
-            var user = _userRepository.GetByName(authenticationRequest.UserName);
+            var user = _userRepository.GetByEmail(authenticationRequest.Email);
 
             if (user == null) return null;
 
