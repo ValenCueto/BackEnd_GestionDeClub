@@ -19,5 +19,12 @@ namespace Infrastructure.Data
             return _dbContext.Users
                 .FirstOrDefault(u => u.Email == userName || u.Name == userName);
         }
+
+        public User? GetByEmail(string email)
+        {
+            return _dbContext.Users
+                .FirstOrDefault(u => u.Email == email);
+        }
+
     }
 }
