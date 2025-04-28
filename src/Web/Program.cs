@@ -68,6 +68,7 @@ builder.Services.AddAuthentication("Bearer")
 #region Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
 #endregion
 
 #region services
@@ -80,6 +81,7 @@ builder.Services.Configure<AuthenticationService.AuthenticationServiceOptions>(
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 
 #endregion
 
