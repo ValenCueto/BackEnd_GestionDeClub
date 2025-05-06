@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
 using Domain.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,7 @@ namespace Web.Controllers
             _availabilityService = availabilityService;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("[Action]")]
         public IActionResult Create([FromBody] AvailabilityInitRequest request)
         {
@@ -36,6 +38,7 @@ namespace Web.Controllers
             return Ok(_availabilityService.GetAll());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("[Action]/{day}")]
         public IActionResult UpdateAvailability([FromBody] AvailabilityInitRequest dto, string day)
         {

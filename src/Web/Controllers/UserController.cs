@@ -2,8 +2,10 @@
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -15,6 +17,11 @@ namespace Web.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+        private int GetAuthenticatedUserId()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            return userIdClaim != null ? int.Parse(userIdClaim.Value) : -1;
         }
 
         [HttpPost("CreateUser")]
@@ -31,11 +38,13 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost("UpdateUser")]
-        public IActionResult UpdateUser([FromBody] UserCreateRequest request, int userId)
+        [Authorize(Roles = "Client")]
+        [HttpPut("UpdateUser")]
+        public IActionResult UpdateUser([FromBody] UserCreateRequest request)
         {
             try 
             {
+                var userId = GetAuthenticatedUserId();
                 _userService.UpdateUser(request,userId);
                 return Ok("Usuario editado exitosamente");
             }
@@ -45,11 +54,13 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Client,Admin")]
         [HttpDelete]
-        public IActionResult DeleteUser([FromBody] int userId)
+        public IActionResult DeleteUser()
         {
             try
             {
+                var userId = GetAuthenticatedUserId();
                 _userService.DeleteUser(userId);
                 return Ok($"user {userId} eliminado correctamente");
             }
@@ -59,11 +70,13 @@ namespace Web.Controllers
             }
         }
 
-        [HttpPost("UpdateUserState")]
-        public IActionResult DeactivateUser([FromBody] int userId)
+        [Authorize(Roles = "Client,Admin")]
+        [HttpPut("UpdateUserState")]
+        public IActionResult DeactivateUser()
         {
             try
             {
+                var userId = GetAuthenticatedUserId();
                 _userService.DeactivateUser(userId);
                 return Ok($"user {userId} eliminado correctamente");
             }
@@ -73,6 +86,7 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpGet("GetAllUsers")]
         public IActionResult GetAllUsers()
         {
