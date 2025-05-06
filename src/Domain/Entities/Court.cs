@@ -1,5 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -14,8 +19,5 @@ namespace Domain.Entities
 
         [StringLength(500)]
         public string? Description { get; set; }
-
-        // Navigation property for court availabilities
-        public virtual ICollection<CourtAvailability>? CourtAvailabilities { get; set; }
     }
 }
