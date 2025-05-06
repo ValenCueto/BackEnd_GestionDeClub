@@ -15,16 +15,18 @@ namespace Domain.Entities
         public string Password { get; set; }
         public int PhoneNumber { get; set; }
         public bool State { get; set; }
+        public bool Paid { get; set; }
         public Subscription Subscription { get; set; }
         public IReadOnlyCollection<Booking> Bookings => _bookings;
 
-        public User(string name, string email, string password, int phoneNumber, Rol rol)
+        public User(string name, string email, string password, int phoneNumber, Rol rol, int? subscriptionId)
         {
             Name = name;
             Email = email;
             Password = password;
             PhoneNumber = phoneNumber;
             Rol = rol;
+            SubscriptionId = subscriptionId;
         }
 
 

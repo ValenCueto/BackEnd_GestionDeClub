@@ -23,7 +23,7 @@ namespace Infrastructure.Data
         {
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Subscription)
-                .WithOne();
+                .WithMany();
 
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.User);

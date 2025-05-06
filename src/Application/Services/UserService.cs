@@ -27,7 +27,8 @@ namespace Application.Services
             request.Email,
             request.Password,
             request.PhoneNumber,
-            request.Rol
+            request.Rol,
+            request.SubscriptionId     
         );
             _userRepository.Add(newUser);
         }
@@ -40,6 +41,7 @@ namespace Application.Services
             userToEdit.Password = request.Password;
             userToEdit.PhoneNumber = request.PhoneNumber;
             userToEdit.Rol = request.Rol;
+            userToEdit.SubscriptionId = request.SubscriptionId;
 
             _userRepository.Update(userToEdit);
         }
