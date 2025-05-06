@@ -54,7 +54,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "Client,Admin")]
+        [Authorize(Roles = "Client")]
         [HttpDelete]
         public IActionResult DeleteUser()
         {
@@ -70,7 +70,7 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "Client,Admin")]
+        [Authorize(Roles = "Client")]
         [HttpPut("UpdateUserState")]
         public IActionResult DeactivateUser()
         {
