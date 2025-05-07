@@ -18,16 +18,15 @@ namespace Domain.Entities
         public Subscription Subscription { get; set; }
         public IReadOnlyCollection<Booking> Bookings => _bookings;
 
-        public User(string name, string email, string password, int phoneNumber, Rol rol)
+        public User(string name, string email, string password, int phoneNumber)
         {
             Name = name;
             Email = email;
             Password = password;
             PhoneNumber = phoneNumber;
-            Rol = rol;
+            Rol = Rol.Client;
+            State = true;
         }
-
-
 
         public void AddBooking(Booking booking)
         {

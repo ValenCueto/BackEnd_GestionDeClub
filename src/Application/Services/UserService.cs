@@ -26,8 +26,7 @@ namespace Application.Services
             request.Name,
             request.Email,
             request.Password,
-            request.PhoneNumber,
-            request.Rol
+            request.PhoneNumber
         );
             _userRepository.Add(newUser);
         }
