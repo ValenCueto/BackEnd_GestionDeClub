@@ -1,9 +1,11 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
 {
+    [Authorize(Roles = "Admin,Gerente")]
     [Route("api/[controller]")]
     [ApiController]
     public class SubscriptionController : ControllerBase
