@@ -10,11 +10,10 @@ namespace Domain.Entities
 {
     public class Booking
     {
-     
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime FinishTime { get; set; }
         public bool Available {  get; set; }
-        public User User { get; set; }
+        public User? User { get; set; }
     }
 }
