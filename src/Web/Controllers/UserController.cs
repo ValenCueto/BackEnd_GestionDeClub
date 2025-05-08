@@ -39,23 +39,38 @@ namespace Web.Controllers
         }
 
         [Authorize(Roles = "Client")]
-        [HttpPut("UpdateUser")]
+        [HttpPut("UpdateUser/current")]
         public IActionResult UpdateUser([FromBody] UserCreateRequest request)
         {
-            try 
+            try
             {
                 var userId = GetAuthenticatedUserId();
-                _userService.UpdateUser(request,userId);
+                _userService.UpdateUser(request, userId);
                 return Ok("Usuario editado exitosamente");
             }
-            catch (Exception ex) 
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [Authorize(Roles = "Admin,Gerente")]
+        [HttpPut("UpdateUser/{userId}")]
+        public IActionResult UpdateUser([FromBody] UserCreateRequest request, [FromRoute] int userId)
+        {
+            try
+            {
+                _userService.UpdateUser(request, userId);
+                return Ok("Usuario editado exitosamente");
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
         }
 
         [Authorize(Roles = "Client")]
-        [HttpDelete]
+        [HttpDelete("DeleteUser/current")]
         public IActionResult DeleteUser()
         {
             try
@@ -70,13 +85,43 @@ namespace Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin,Gerente")]
+        [HttpDelete("DeleteUser/{userId}")]
+        public IActionResult DeleteUser([FromRoute] int userId)
+        {
+            try
+            {
+                _userService.DeleteUser(userId);
+                return Ok($"user {userId} eliminado correctamente");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [Authorize(Roles = "Client")]
-        [HttpPut("UpdateUserState")]
+        [HttpPut("UpdateUserState/current")]
         public IActionResult DeactivateUser()
         {
             try
             {
                 var userId = GetAuthenticatedUserId();
+                _userService.DeactivateUser(userId);
+                return Ok($"user {userId} eliminado correctamente");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize(Roles = "Admin,Gerente")]
+        [HttpPut("UpdateUserState/{userId}")]
+        public IActionResult DeactivateUser([FromRoute] int userId)
+        {
+            try
+            {
                 _userService.DeactivateUser(userId);
                 return Ok($"user {userId} eliminado correctamente");
             }
