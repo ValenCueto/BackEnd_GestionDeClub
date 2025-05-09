@@ -5,6 +5,7 @@ namespace Application.Models.Response
 {
     public class UserDtoResponse
     {
+        public int Id {  get; set; }
         public string Name {  get; set; }
         public Rol Rol { get; set; }
         public string Email { get; set; }
@@ -14,7 +15,9 @@ namespace Application.Models.Response
 
         public static UserDtoResponse Create(User user)
         {
-            var dto = new UserDtoResponse { Name = user.Name,
+            var dto = new UserDtoResponse { 
+                Id = user.Id,
+                Name = user.Name,
                 Rol = user.Rol,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
