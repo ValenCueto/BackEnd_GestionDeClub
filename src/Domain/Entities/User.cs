@@ -19,7 +19,7 @@ namespace Domain.Entities
         public Subscription Subscription { get; set; }
         public IReadOnlyCollection<Booking> Bookings => _bookings;
 
-        public User(string name, string email, string password, int phoneNumber)
+        public User(string name, string email, string password, int phoneNumber, int? subscriptionId)
         {
             Name = name;
             Email = email;
