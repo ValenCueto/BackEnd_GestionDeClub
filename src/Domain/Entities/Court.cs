@@ -12,7 +12,23 @@ namespace Domain.Entities
     {
 
         public int Id { get; set; }
-        public float Price { get; set; }
-        
+        private List<Booking> _bookings;
+
+        public void AddBooking(Booking booking)
+        {
+            _bookings.Add(booking);
+        }
+
+        public void DeleteBooking(Booking booking) 
+        {
+            _bookings.Remove(booking);
+        }
+
+        public List<Booking> GetBookings() 
+        { 
+            return _bookings; 
+        }
+
+
     }
 }

@@ -8,7 +8,7 @@ namespace Application.Models.Request
 {
     public class BookingCreateRequest
     {
-        public DateTime StartTime;
-        public DateTime FinishTime;
+        public DateTime StartTime { get; set; }
+        public DateTime FinishTime { get; set; }
     }
 }

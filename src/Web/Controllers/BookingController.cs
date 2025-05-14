@@ -1,4 +1,5 @@
-﻿using Application.Models.Request;
+﻿using Application.Interfaces;
+using Application.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -20,7 +21,7 @@ namespace Web.Controllers
             try
             {
                 _bookingService.CreateBooking(request);
-                return Ok(" creado exitosamente");
+                return Ok("Booking creado exitosamente");
             }
             catch (Exception ex)
             {
