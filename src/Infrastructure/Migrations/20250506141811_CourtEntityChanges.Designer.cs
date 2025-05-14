@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250506141811_CourtEntityChanges")]
+    partial class CourtEntityChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,6 +110,9 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int?>("CourtId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FinishTime")
                         .HasColumnType("datetime(6)");
 
@@ -115,32 +121,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourtId");
+
                     b.ToTable("CourtAvailabilities");
-                });
-
-            modelBuilder.Entity("Domain.Entities.News", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("News");
                 });
 
             modelBuilder.Entity("Domain.Entities.Subscription", b =>
@@ -216,6 +199,13 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.CourtAvailability", b =>
+                {
+                    b.HasOne("Domain.Entities.Court", null)
+                        .WithMany("CourtAvailabilities")
+                        .HasForeignKey("CourtId");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.HasOne("Domain.Entities.Subscription", "Subscription")
@@ -223,6 +213,11 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Domain.Entities.User", "SubscriptionId");
 
                     b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Court", b =>
+                {
+                    b.Navigation("CourtAvailabilities");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

@@ -10,8 +10,9 @@ namespace Domain.Entities
 {
     public class Court
     {
-
+        [Key]
         public int Id { get; set; }
+
         private List<Booking> _bookings;
 
         public void AddBooking(Booking booking)
@@ -28,7 +29,5 @@ namespace Domain.Entities
         { 
             return _bookings; 
         }
-
-
     }
 }
