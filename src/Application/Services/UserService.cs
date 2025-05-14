@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
@@ -26,7 +20,8 @@ namespace Application.Services
             request.Name,
             request.Email,
             request.Password,
-            request.PhoneNumber
+            request.PhoneNumber,
+            request.SubscriptionId     
         );
             _userRepository.Add(newUser);
         }
@@ -39,6 +34,7 @@ namespace Application.Services
             userToEdit.Password = request.Password;
             userToEdit.PhoneNumber = request.PhoneNumber;
             userToEdit.Rol = request.Rol;
+            userToEdit.SubscriptionId = request.SubscriptionId;
 
             _userRepository.Update(userToEdit);
         }
