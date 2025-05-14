@@ -18,6 +18,7 @@ namespace Infrastructure.Data
         public DbSet<CourtAvailability> CourtAvailabilities { get; set; }
         public DbSet<Availability> Availabilities { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<News> News { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
