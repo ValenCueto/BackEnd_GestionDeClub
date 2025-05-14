@@ -70,7 +70,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
 builder.Services.AddScoped<ICourtRepository, CourtRepository>();
+builder.Services.AddScoped<INewsRepository, NewsRepository>();
 #endregion
+
+
 
 #region services
 // Configuración de las opciones de autenticación
@@ -84,7 +87,7 @@ builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
-
+builder.Services.AddScoped<INewsService, NewsService>();
 #endregion
 
 //CORS para conexion con el front
