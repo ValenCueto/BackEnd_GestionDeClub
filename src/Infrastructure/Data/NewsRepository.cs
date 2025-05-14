@@ -13,6 +13,12 @@ namespace Infrastructure.Data
         public NewsRepository(ApplicationDbContext context) : base(context)
         {
         }
+        public List<News> GetByDate(DateTime date)
+        {
+            return _dbContext.News
+                .Where(n => n.Date.Date == date.Date) 
+                .ToList();
+        }
 
     }
 }

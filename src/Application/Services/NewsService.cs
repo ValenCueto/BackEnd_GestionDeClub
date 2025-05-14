@@ -53,17 +53,26 @@ namespace Application.Services
 
         public List<NewsDtoResponse> GetAll()
         {
-            var newsList = _newsRepository.GetAll();
+            var newsList = _newsRepository.GetAll() ?? throw new Exception("No hay noticias");
 
-            return newsList.Select(news => new NewsDtoResponse
+            var response = new List<NewsDtoResponse>();
+            foreach (var news in newsList)
             {
-                Id = news.Id,
-                Title = news.Title,
-                Description = news.Description,
-                ImageUrl = news.ImageUrl,
-                Date = news.Date
-            }).ToList();
+                var dto = new NewsDtoResponse
+                {
+                    Id = news.Id,
+                    Title = news.Title,
+                    Description = news.Description,
+                    ImageUrl = news.ImageUrl,
+                    Date = news.Date
+                };
+
+                response.Add(dto);
+            }
+
+            return response;
         }
+
 
         public NewsDtoResponse GetById(int id)
         {
@@ -79,22 +88,31 @@ namespace Application.Services
             };
         }
 
+
         //Filtrar por fecha
         public List<NewsDtoResponse> GetByDate(DateTime date)
         {
-            var newsList = _newsRepository.GetAll()
-                .Where(n => n.Date.Date == date.Date) // comparación sin hora
-                .Select(n => new NewsDtoResponse
-                {
-                    Id = n.Id,
-                    Title = n.Title,
-                    Description = n.Description,
-                    ImageUrl = n.ImageUrl,
-                    Date = n.Date
-                }).ToList();
+            var newsList = _newsRepository.GetByDate(date) ?? throw new Exception("No hay noticias para esa fecha");
 
-            return newsList;
+            var response = new List<NewsDtoResponse>();
+            foreach (var news in newsList)
+            {
+                var dto = new NewsDtoResponse
+                {
+                    Id = news.Id,
+                    Title = news.Title,
+                    Description = news.Description,
+                    ImageUrl = news.ImageUrl,
+                    Date = news.Date
+                };
+
+                response.Add(dto);
+            }
+
+            return response;
         }
+
+
 
     }
 }

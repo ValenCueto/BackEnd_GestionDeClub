@@ -9,7 +9,8 @@ namespace Domain.Interfaces
 {
     public interface INewsRepository : IBaseRepository<News>
     {
-        
-        
+        List<News> GetByDate(DateTime date);
+
+
     }
 }
