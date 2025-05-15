@@ -21,7 +21,8 @@ namespace Web.Controllers
             try
             {
                 _bookingService.CreateBooking(request);
-                return Ok("Booking creado exitosamente");
+                return Ok();
+                //CreatedAtAction()
             }
             catch (Exception ex)
             {

@@ -28,33 +28,15 @@ namespace Application.Services
             return court != null ? CourtResponseDto.Create(court) : null;
         }
 
-        public void CreateCourt(CourtCreateRequest request)
+        public void CreateCourt()
         {
-            var court = new Court
-            {
-                Name = request.Name,
-                Description = request.Description
-            };
-
+            var court = new Court();
             _courtRepository.Add(court);
-        }
-
-        public void UpdateCourt(CourtCreateRequest request, int courtId)
-        {
-            var courtToUpdate = _courtRepository.GetById(courtId) ??
-                throw new NotFoundException("Court", courtId);
-
-            courtToUpdate.Name = request.Name;
-            courtToUpdate.Description = request.Description;
-
-            _courtRepository.Update(courtToUpdate);
         }
 
         public void DeleteCourt(int courtId)
         {
-            var courtToDelete = _courtRepository.GetById(courtId) ??
-                throw new NotFoundException("Court", courtId);
-
+            var courtToDelete = _courtRepository.GetById(courtId) ?? throw new NotFoundException("Court", courtId);
             _courtRepository.Delete(courtToDelete);
         }
     }

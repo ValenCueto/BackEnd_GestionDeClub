@@ -33,7 +33,13 @@ namespace Domain.Entities
             StartTime = startTime;
             FinishTime = finishTime;
             Available = true;
+            User = null;
             Court = court;
+        }
+
+        private Booking()
+        {
+            
         }
     }
 }

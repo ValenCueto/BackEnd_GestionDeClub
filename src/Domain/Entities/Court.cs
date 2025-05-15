@@ -13,7 +13,7 @@ namespace Domain.Entities
         [Key]
         public int Id { get; set; }
 
-        private List<Booking> _bookings;
+        private List<Booking> _bookings = new List<Booking>();
 
         public void AddBooking(Booking booking)
         {
