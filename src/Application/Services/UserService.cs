@@ -26,12 +26,11 @@ namespace Application.Services
             _userRepository.Add(newUser);
         }
 
-        public void UpdateUser(UserCreateRequest request, int userId)
+        public void UpdateUser(UserUpdateRequest request, int userId)
         {
             User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             userToEdit.Name = request.Name;
             userToEdit.Email = request.Email;
-            userToEdit.Password = request.Password;
             userToEdit.PhoneNumber = request.PhoneNumber;
             userToEdit.Rol = request.Rol;
             userToEdit.SubscriptionId = request.SubscriptionId;
