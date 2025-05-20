@@ -34,6 +34,7 @@ namespace Application.Services
             userToEdit.PhoneNumber = request.PhoneNumber;
             userToEdit.Rol = request.Rol;
             userToEdit.SubscriptionId = request.SubscriptionId;
+            userToEdit.State = request.State;
 
             _userRepository.Update(userToEdit);
         }
