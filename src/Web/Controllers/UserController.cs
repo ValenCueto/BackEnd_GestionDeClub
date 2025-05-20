@@ -40,7 +40,7 @@ namespace Web.Controllers
 
         [Authorize(Roles = "Client")]
         [HttpPut("UpdateUser/current")]
-        public IActionResult UpdateUser([FromBody] UserCreateRequest request)
+        public IActionResult UpdateUser([FromBody] UserUpdateRequest request)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace Web.Controllers
 
         [Authorize(Roles = "Admin,Gerente")]
         [HttpPut("UpdateUser/{userId}")]
-        public IActionResult UpdateUser([FromBody] UserCreateRequest request, [FromRoute] int userId)
+        public IActionResult UpdateUser([FromBody] UserUpdateRequest request, [FromRoute] int userId)
         {
             try
             {
