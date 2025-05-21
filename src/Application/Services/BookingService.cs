@@ -28,6 +28,7 @@ namespace Application.Services
         {
             List<DateTime> dateList = new List<DateTime>(); // lista de fechas del dia X hasta el dia Y
             List<Court> courts = _courtRepository.GetAll();
+            List<Booking> bookings = _bookingRepository.GetAll();
             DateTime startTime = request.StartTime;
             DateTime finishTime = request.FinishTime;
 
@@ -48,10 +49,20 @@ namespace Application.Services
                     {
                         DateTime start = date.Date + time.ToTimeSpan();
                         DateTime end = start.AddMinutes(availability.Duration);
+                        
 
-                        Booking booking = new Booking(start, end, court);
-                        _bookingRepository.Add(booking);
-                        court.AddBooking(booking);
+                        bool bookingExist = bookings.Any(b =>
+                            b.Court.Id == court.Id &&
+                            b.StartTime == start && 
+                            b.FinishTime == end
+                        );
+                        
+                        if (bookingExist == false)
+                        {
+                            Booking booking = new Booking(start, end, court);
+                            court.AddBooking(booking);
+                            _bookingRepository.Add(booking);
+                        }
                     }
                 }
             }
@@ -60,37 +71,10 @@ namespace Application.Services
 }
 
 
+//indice unico en EF
+//DateTime start = date.Date + time.ToTimeSpan();
+//DateTime end = start.AddMinutes(availability.Duration);
 
-
-//DateTime startDate = request.StartTime.Date;
-//DateTime endDate = request.FinishTime.Date;
-//for (DateTime date = startDate; date <= endDate; date = date.AddDays(1))
-//{
-//    var dayOfWeek = date.DayOfWeek;
-
-//    var availability = _availabilityRepository.GetByDay(dayOfWeek);
-//    if (availability == null)
-//        continue; // Si no hay disponibilidad ese día, lo salteamos
-
-//    foreach (var court in courts)
-//    {
-//        for (var time = availability.StartTime;
-//                 time.AddMinutes(availability.Duration) <= availability.FinishTime;
-//                 time = time.AddMinutes(availability.Duration))
-//        {
-//            DateTime bookingStart = date.Add(time.ToTimeSpan());
-//            DateTime bookingEnd = date.Add(time.AddMinutes(availability.Duration).ToTimeSpan());
-
-//            Booking booking = new Booking(bookingStart,bookingEnd,court)
-//            {
-//                StartTime = bookingStart,
-//                FinishTime = bookingEnd,
-//                Available = true,
-//                User = null // o el usuario correspondiente
-//            };
-
-//            _bookingRepository.Add(booking);
-//            court.AddBooking(booking);
-//        }
-//    }
-//}
+//Booking booking = new Booking(start, end, court);
+//_bookingRepository.Add(booking);
+//court.AddBooking(booking);
