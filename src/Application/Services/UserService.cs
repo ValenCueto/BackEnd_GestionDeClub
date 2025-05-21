@@ -38,6 +38,15 @@ namespace Application.Services
 
             _userRepository.Update(userToEdit);
         }
+
+        public void UpdateCurrentUser(UserCurrentDtoResponse request, int userId)
+        {
+            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
+            userToEdit.Name = request.Name;
+            userToEdit.Email = request.Email;
+            userToEdit.PhoneNumber = request.PhoneNumber;
+            _userRepository.Update(userToEdit);
+        }
         public void DeleteUser(int userId)
         {
             User userToDelete = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El user {userId} no fué encontrado");
@@ -63,5 +72,19 @@ namespace Application.Services
 
             return usersFiltered;
         }
+
+        public UserCurrentDtoResponse GetCurrent(int userId)
+        {
+            var user = _userRepository.GetById(userId);
+            var userToResponse = new UserCurrentDtoResponse()
+            {
+                Name = user.Name,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            };
+            return userToResponse;
+        }
+
+      
     }
 }
