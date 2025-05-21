@@ -19,7 +19,8 @@ namespace Infrastructure.Data
         public DbSet<Availability> Availabilities { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<News> News { get; set; }
-
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<MonthlyFee> MonthlyFees { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -30,6 +31,18 @@ namespace Infrastructure.Data
                 .HasOne(b => b.User);
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Payment>()
+            .HasOne(p => p.User)
+            .WithMany() 
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.MonthlyFee)
+                .WithMany() 
+                .HasForeignKey(p => p.MonthlyFeeId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

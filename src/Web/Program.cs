@@ -71,6 +71,8 @@ builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
 builder.Services.AddScoped<ICourtRepository, CourtRepository>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<IMonthlyFeeRepository, MonthlyFeeRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 #endregion
 
 
@@ -88,6 +90,8 @@ builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>(
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<IMonthlyFeeService, MonthlyFeeService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 #endregion
 
 //CORS para conexion con el front
