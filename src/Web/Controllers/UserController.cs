@@ -38,14 +38,14 @@ namespace Web.Controllers
             }
         }
 
-        [Authorize(Roles = "Client")]
-        [HttpPut("UpdateUser/current")]
-        public IActionResult UpdateUser([FromBody] UserUpdateRequest request)
+        [Authorize]
+        [HttpPut("[Action]")]
+        public IActionResult UpdateCurrentUser([FromBody] UserCurrentDtoResponse request)
         {
             try
             {
                 var userId = GetAuthenticatedUserId();
-                _userService.UpdateUser(request, userId);
+                _userService.UpdateCurrentUser(request, userId);
                 return Ok("Usuario editado exitosamente");
             }
             catch (Exception ex)
@@ -144,6 +144,14 @@ namespace Web.Controllers
             { 
                 return BadRequest(ex);
             }
+        }
+
+        [Authorize(Roles = "Client,Admin")]
+        [HttpGet("[Action]")]
+        public IActionResult GetCurrentUser()
+        {
+            var userId = GetAuthenticatedUserId();
+            return Ok(_userService.GetCurrent(userId));
         }
 
 
