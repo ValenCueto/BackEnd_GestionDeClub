@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
@@ -26,20 +20,31 @@ namespace Application.Services
             request.Name,
             request.Email,
             request.Password,
-            request.PhoneNumber
+            request.PhoneNumber,
+            request.SubscriptionId     
         );
             _userRepository.Add(newUser);
         }
 
-        public void UpdateUser(UserCreateRequest request, int userId)
+        public void UpdateUser(UserUpdateRequest request, int userId)
         {
             User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             userToEdit.Name = request.Name;
             userToEdit.Email = request.Email;
-            userToEdit.Password = request.Password;
             userToEdit.PhoneNumber = request.PhoneNumber;
             userToEdit.Rol = request.Rol;
+            userToEdit.SubscriptionId = request.SubscriptionId;
+            userToEdit.State = request.State;
 
+            _userRepository.Update(userToEdit);
+        }
+
+        public void UpdateCurrentUser(UserCurrentDtoResponse request, int userId)
+        {
+            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
+            userToEdit.Name = request.Name;
+            userToEdit.Email = request.Email;
+            userToEdit.PhoneNumber = request.PhoneNumber;
             _userRepository.Update(userToEdit);
         }
         public void DeleteUser(int userId)
@@ -67,5 +72,19 @@ namespace Application.Services
 
             return usersFiltered;
         }
+
+        public UserCurrentDtoResponse GetCurrent(int userId)
+        {
+            var user = _userRepository.GetById(userId);
+            var userToResponse = new UserCurrentDtoResponse()
+            {
+                Name = user.Name,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            };
+            return userToResponse;
+        }
+
+      
     }
 }

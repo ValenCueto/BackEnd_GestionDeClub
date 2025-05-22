@@ -12,9 +12,11 @@ namespace Application.Interfaces
     public interface IUserService
     {
         void CreateUser(UserCreateRequest request);
-        void UpdateUser(UserCreateRequest request, int userId);
+        void UpdateUser(UserUpdateRequest request, int userId);
+        void UpdateCurrentUser(UserCurrentDtoResponse request, int userId);
         void DeleteUser(int userId);
         void DeactivateUser(int userId);
         List<UserDtoResponse> GetAll();
+        UserCurrentDtoResponse GetCurrent(int userId);
     }
 }
