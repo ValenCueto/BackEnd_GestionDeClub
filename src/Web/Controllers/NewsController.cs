@@ -8,7 +8,7 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,CM")]
+    [Authorize]
     public class NewsController : ControllerBase
     {
         private readonly INewsService _newsService;
@@ -19,6 +19,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("Create")]
+        [Authorize]
         public IActionResult CreateNews([FromBody] NewsCreateRequest request)
         {
             try
@@ -33,6 +34,7 @@ namespace Web.Controllers
         }
 
         [HttpPut("Update/{id}")]
+        [Authorize(Roles = "Admin,CM")]
         public IActionResult UpdateNews(int id, [FromBody] NewsCreateRequest request)
         {
             try
@@ -47,6 +49,7 @@ namespace Web.Controllers
         }
 
         [HttpDelete("Delete/{id}")]
+        [Authorize(Roles = "Admin,CM")]
         public IActionResult DeleteNews(int id)
         {
             try
@@ -61,6 +64,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("GetAll")]
+        [Authorize]
         public ActionResult<List<NewsDtoResponse>> GetAllNews()
         {
             try
@@ -75,6 +79,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("GetById/{id}")]
+        [Authorize]
         public ActionResult<NewsDtoResponse> GetNewsById(int id)
         {
             try
@@ -89,6 +94,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("GetByDate")]
+        [Authorize]
         public ActionResult<List<NewsDtoResponse>> GetNewsByDate([FromQuery] DateTime date)
         {
             try
@@ -100,6 +106,31 @@ namespace Web.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpPost("UploadImage")]
+        [Authorize(Roles = "Admin,CM")]
+        public async Task<IActionResult> UploadImage(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Archivo no válido.");
+
+            // Asegurarse de que el directorio exista
+            var imagesFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+            if (!Directory.Exists(imagesFolder))
+                Directory.CreateDirectory(imagesFolder);
+
+            // Evitar conflictos de nombre con un GUID
+            var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
+            var filePath = Path.Combine(imagesFolder, fileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var imageUrl = $"{Request.Scheme}://{Request.Host}/images/{fileName}";
+            return Ok(imageUrl);
         }
 
     }
