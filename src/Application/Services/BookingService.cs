@@ -50,7 +50,6 @@ namespace Application.Services
                         DateTime start = date.Date + time.ToTimeSpan();
                         DateTime end = start.AddMinutes(availability.Duration);
                         
-
                         bool bookingExist = bookings.Any(b =>
                             b.Court.Id == court.Id &&
                             b.StartTime == start && 
