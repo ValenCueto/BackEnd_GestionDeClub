@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
+using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers
@@ -29,5 +30,13 @@ namespace Web.Controllers
                 return BadRequest(ex);
             }
         }
+        [HttpGet("GetAllBookings")]
+        public IActionResult GetAllBookings()
+        {
+            List<Booking> bookings = _bookingService.GetAllBookings();
+            return Ok(bookings);
+        }
+
+
     }
 }
