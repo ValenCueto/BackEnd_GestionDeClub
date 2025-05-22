@@ -12,6 +12,6 @@ namespace Application.Interfaces
     {
         void InitDefaultAvailability(AvailabilityInitRequest dto);
         List<AvailabilityResponseDto> GetAll();
-        void UpdateAvailability(AvailabilityInitRequest dto, string day);
+        void UpdateAvailability(AvailabilityInitRequest dto, DayOfWeek day);
     }
 }

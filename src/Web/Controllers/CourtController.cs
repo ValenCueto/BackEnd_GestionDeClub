@@ -38,31 +38,12 @@ namespace Web.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateCourt([FromBody] CourtCreateRequest request)
+        public IActionResult CreateCourt()
         {
             try
             {
-                _courtService.CreateCourt(request);
+                _courtService.CreateCourt();
                 return Ok("La cancha fue creada correctamente");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-
-        [HttpPut("{id}")]
-        public IActionResult UpdateCourt(int id, [FromBody] CourtCreateRequest request)
-        {
-            try
-            {
-                _courtService.UpdateCourt(request, id);
-                return Ok("La cancha fue actualizada correctamente");
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
