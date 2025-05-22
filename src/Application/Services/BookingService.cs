@@ -26,7 +26,7 @@ namespace Application.Services
 
         public void CreateBooking(BookingCreateRequest request)
         {
-            List<DateTime> dateList = new List<DateTime>(); // lista de fechas del dia X hasta el dia Y
+            List<DateTime> dateList = new List<DateTime>();
             List<Court> courts = _courtRepository.GetAll();
             List<Booking> bookings = _bookingRepository.GetAll();
             DateTime startTime = request.StartTime;
@@ -37,7 +37,6 @@ namespace Application.Services
                 dateList.Add(date);
             }
 
-            //falta validar que no se repitan fecha, mes, año y cancha
             foreach (DateTime date in dateList)
             {
                 DayOfWeek dayOfWeek = date.DayOfWeek;
@@ -66,14 +65,10 @@ namespace Application.Services
                 }
             }
         }
+
+        public List<Booking> GetAllBookings()
+        {
+            return _bookingRepository.GetAll();
+        }
     }
 }
-
-
-//indice unico en EF
-//DateTime start = date.Date + time.ToTimeSpan();
-//DateTime end = start.AddMinutes(availability.Duration);
-
-//Booking booking = new Booking(start, end, court);
-//_bookingRepository.Add(booking);
-//court.AddBooking(booking);
