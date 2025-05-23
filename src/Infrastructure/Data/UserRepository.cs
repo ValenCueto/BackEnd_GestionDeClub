@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -25,6 +26,14 @@ namespace Infrastructure.Data
             return _dbContext.Users
                 .FirstOrDefault(u => u.Email == email);
         }
+
+        public async Task<User?> GetByResetTokenAsync(string token)
+        {
+            return await _dbContext.Users.FirstOrDefaultAsync(u =>
+                u.ResetPasswordToken == token &&
+                u.ResetPasswordTokenExpiry > DateTime.UtcNow);
+        }
+
 
     }
 }
