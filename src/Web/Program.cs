@@ -90,6 +90,8 @@ builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IRecoverPassword, RecoverPassword>();
 #endregion
 
 //CORS para conexion con el front

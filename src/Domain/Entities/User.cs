@@ -19,6 +19,9 @@ namespace Domain.Entities
         public Subscription Subscription { get; set; }
         public IReadOnlyCollection<Booking> Bookings => _bookings;
 
+        public string? ResetPasswordToken { get; set; }
+        public DateTime? ResetPasswordTokenExpiry { get; set; }
+
         public User(string name, string email, string password, int phoneNumber, int? subscriptionId)
         {
             Name = name;
