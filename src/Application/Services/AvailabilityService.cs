@@ -62,7 +62,7 @@ namespace Application.Services
             return response;
         }
 
-        public void UpdateAvailability(AvailabilityInitRequest dto, string day)
+        public void UpdateAvailability(AvailabilityInitRequest dto, DayOfWeek day)
         {
             var availabilityToEdit = _availabilityRepository.GetByDay(day);
             availabilityToEdit.StartTime = dto.StartTime;

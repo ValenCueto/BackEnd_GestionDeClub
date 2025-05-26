@@ -14,9 +14,9 @@ namespace Infrastructure.Data
         {
         }
 
-        public Availability GetByDay(string day) 
+        public Availability GetByDay(DayOfWeek day) 
         {
-            return _dbContext.Availabilities.FirstOrDefault(a => a.DayOfWeek.ToString().ToLower() == day.ToLower());
+            return _dbContext.Availabilities.FirstOrDefault(a => a.DayOfWeek == day);
         }
     }
 }

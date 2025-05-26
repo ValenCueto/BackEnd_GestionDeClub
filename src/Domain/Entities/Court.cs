@@ -13,11 +13,21 @@ namespace Domain.Entities
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
+        private List<Booking> _bookings = new List<Booking>();
 
-        [StringLength(500)]
-        public string? Description { get; set; }
+        public void AddBooking(Booking booking)
+        {
+            _bookings.Add(booking);
+        }
+
+        public void DeleteBooking(Booking booking) 
+        {
+            _bookings.Remove(booking);
+        }
+
+        public List<Booking> GetBookings() 
+        { 
+            return _bookings; 
+        }
     }
 }

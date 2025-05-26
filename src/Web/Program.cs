@@ -29,7 +29,7 @@ builder.Services.AddSwaggerGen(setupAction =>
     {
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
-        Description = "Acá pegar el token generado al loguearse."
+        Description = "AcÃ¡ pegar el token generado al loguearse."
     });
 
     setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -40,7 +40,7 @@ builder.Services.AddSwaggerGen(setupAction =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = "GestionClubApiBearerAuth" } //Tiene que coincidir con el id seteado arriba en la definición
+                    Id = "GestionClubApiBearerAuth" } //Tiene que coincidir con el id seteado arriba en la definiciÃ³n
                 }, new List<string>() }
     });
 
@@ -69,14 +69,17 @@ builder.Services.AddAuthentication("Bearer")
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 builder.Services.AddScoped<IAvailabilityRepository, AvailabilityRepository>();
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<ICourtRepository, CourtRepository>();
 builder.Services.AddScoped<INewsRepository, NewsRepository>();
+builder.Services.AddScoped<IMonthlyFeeRepository, MonthlyFeeRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 #endregion
 
 
 
 #region services
-// Configuración de las opciones de autenticación
+// ConfiguraciÃ³n de las opciones de autenticaciÃ³n
 builder.Services.Configure<AuthenticationService.AuthenticationServiceOptions>(
     builder.Configuration.GetSection(AuthenticationService.AuthenticationServiceOptions.AuthenticationService));
 
@@ -86,8 +89,14 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<ICustomAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IAvailabilityService, AvailabilityService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<ICourtService, CourtService>();
 builder.Services.AddScoped<INewsService, NewsService>();
+builder.Services.AddScoped<IMonthlyFeeService, MonthlyFeeService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IRecoverPassword, RecoverPassword>();
+
 #endregion
 
 //CORS para conexion con el front

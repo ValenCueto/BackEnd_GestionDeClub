@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IAvailabilityService
+    public interface IMonthlyFeeService
     {
-        void InitDefaultAvailability(AvailabilityInitRequest dto);
-        List<AvailabilityResponseDto> GetAll();
-        void UpdateAvailability(AvailabilityInitRequest dto, DayOfWeek day);
+        void Create(MonthlyFeeCreateRequest request);
+        List<MonthlyFeeDtoResponse> GetAll();
+        MonthlyFeeDtoResponse? GetByMonthYear(int month, int year);
     }
 }

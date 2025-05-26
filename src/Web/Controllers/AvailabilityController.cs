@@ -40,7 +40,7 @@ namespace Web.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("[Action]/{day}")]
-        public IActionResult UpdateAvailability([FromBody] AvailabilityInitRequest dto, string day)
+        public IActionResult UpdateAvailability([FromBody] AvailabilityInitRequest dto, DayOfWeek day)
         {
             try
             {
