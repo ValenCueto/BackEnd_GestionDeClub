@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250521192640_AddCuotasYPayment")]
+    partial class AddCuotasYPayment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,21 +61,16 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("CourtId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("FinishTime")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourtId");
 
                     b.HasIndex("UserId");
 
@@ -86,6 +84,15 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
 
@@ -241,12 +248,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("PhoneNumber")
                         .HasColumnType("int");
 
-                    b.Property<string>("ResetPasswordToken")
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime?>("ResetPasswordTokenExpiry")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<int>("Rol")
                         .HasColumnType("int");
 
@@ -265,17 +266,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Booking", b =>
                 {
-                    b.HasOne("Domain.Entities.Court", "Court")
-                        .WithMany()
-                        .HasForeignKey("CourtId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Bookings")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Court");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

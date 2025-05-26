@@ -1,0 +1,63 @@
+﻿using Application.Interfaces;
+using Application.Models.Request;
+using Application.Models.Response;
+using Domain.Entities;
+using Domain.Interfaces;
+
+namespace Application.Services
+{
+    public class MonthlyFeeService : IMonthlyFeeService
+    {
+        private readonly IMonthlyFeeRepository _repository;
+
+        public MonthlyFeeService(IMonthlyFeeRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public void Create(MonthlyFeeCreateRequest request)
+        {
+            if (_repository.GetByMonthYear(request.Month, request.Year) != null)
+                throw new Exception("Ya existe una cuota para ese mes y año.");
+
+            var dueDate = new DateTime(request.Year, request.Month, 10);
+
+            var fee = new MonthlyFee
+            {
+                Price = request.Price,
+                Month = request.Month,
+                Year = request.Year,
+                DueDate = dueDate
+            };
+
+            _repository.Add(fee);
+        }
+
+        public List<MonthlyFeeDtoResponse> GetAll()
+        {
+            return _repository.GetAll().Select(f => new MonthlyFeeDtoResponse
+            {
+                Id = f.Id,
+                Price = f.Price,
+                Month = f.Month,
+                Year = f.Year,
+                DueDate = f.DueDate
+            }).ToList();
+        }
+
+        public MonthlyFeeDtoResponse? GetByMonthYear(int month, int year)
+        {
+            var fee = _repository.GetByMonthYear(month, year);
+            if (fee == null) return null;
+
+            return new MonthlyFeeDtoResponse
+            {
+                Id = fee.Id,
+                Price = fee.Price,
+                Month = fee.Month,
+                Year = fee.Year,
+                DueDate = fee.DueDate
+            };
+        }
+    }
+}
