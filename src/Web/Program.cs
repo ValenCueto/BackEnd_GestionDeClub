@@ -97,6 +97,9 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IRecoverPassword, RecoverPassword>();
 
+//MERCADOPAGO
+builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
+
 #endregion
 
 //CORS para conexion con el front
