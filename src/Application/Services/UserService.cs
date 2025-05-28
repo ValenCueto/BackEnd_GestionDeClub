@@ -2,6 +2,7 @@
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
 
 namespace Application.Services
@@ -16,6 +17,11 @@ namespace Application.Services
         }
         public void CreateUser(UserCreateRequest request)
         {
+            var existingUserEmail = _userRepository.GetByEmail(request.Email);
+            if (existingUserEmail is not null)
+            {
+                throw new BadRequestException("Ya existe un usuario con ese email");
+            }
             var newUser = new User(
             request.Name,
             request.Email,
@@ -28,6 +34,11 @@ namespace Application.Services
 
         public void UpdateUser(UserUpdateRequest request, int userId)
         {
+            var existingUserEmail = _userRepository.GetByEmail(request.Email);
+            if (existingUserEmail is not null)
+            {
+                throw new BadRequestException("Ya existe un usuario con ese email");
+            }
             User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             userToEdit.Name = request.Name;
             userToEdit.Email = request.Email;
@@ -41,6 +52,11 @@ namespace Application.Services
 
         public void UpdateCurrentUser(UserCurrentDtoResponse request, int userId)
         {
+            var existingUserEmail = _userRepository.GetByEmail(request.Email);
+            if (existingUserEmail is not null)
+            {
+                throw new BadRequestException("Ya existe un usuario con ese email");
+            }
             User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             userToEdit.Name = request.Name;
             userToEdit.Email = request.Email;
