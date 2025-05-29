@@ -24,7 +24,7 @@ namespace Infrastructure.Data
         public User? GetByEmail(string email)
         {
             return _dbContext.Users
-                .FirstOrDefault(u => u.Email == email);
+                .FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
         }
 
         public async Task<User?> GetByResetTokenAsync(string token)

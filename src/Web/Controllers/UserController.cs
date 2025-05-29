@@ -2,6 +2,7 @@
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +35,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -48,9 +49,9 @@ namespace Web.Controllers
                 _userService.UpdateCurrentUser(request, userId);
                 return Ok("Usuario editado exitosamente");
             }
-            catch (Exception ex)
+            catch (BadRequestException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
@@ -63,9 +64,9 @@ namespace Web.Controllers
                 _userService.UpdateUser(request, userId);
                 return Ok("Usuario editado exitosamente");
             }
-            catch (Exception ex)
+            catch (BadRequestException ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message });
             }
         }
 
