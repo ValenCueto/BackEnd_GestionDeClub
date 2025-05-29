@@ -34,12 +34,12 @@ namespace Application.Services
 
         public void UpdateUser(UserUpdateRequest request, int userId)
         {
+            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             var existingUserEmail = _userRepository.GetByEmail(request.Email);
-            if (existingUserEmail is not null)
+            if (existingUserEmail is not null && userToEdit.Id != userId)
             {
                 throw new BadRequestException("Ya existe un usuario con ese email");
             }
-            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             userToEdit.Name = request.Name;
             userToEdit.Email = request.Email;
             userToEdit.PhoneNumber = request.PhoneNumber;
@@ -52,12 +52,12 @@ namespace Application.Services
 
         public void UpdateCurrentUser(UserCurrentDtoResponse request, int userId)
         {
+            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             var existingUserEmail = _userRepository.GetByEmail(request.Email);
-            if (existingUserEmail is not null)
+            if (existingUserEmail is not null && userToEdit.Id != userId)
             {
                 throw new BadRequestException("Ya existe un usuario con ese email");
             }
-            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             userToEdit.Name = request.Name;
             userToEdit.Email = request.Email;
             userToEdit.PhoneNumber = request.PhoneNumber;
