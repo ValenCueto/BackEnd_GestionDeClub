@@ -9,6 +9,6 @@ namespace Domain.Interfaces
 {
     public interface IBookingRepository : IBaseRepository<Booking>
     {
-
+        List<Booking> GetAllBookings();
     }
 }
