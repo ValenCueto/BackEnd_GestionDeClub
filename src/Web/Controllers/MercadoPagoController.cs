@@ -18,12 +18,12 @@ namespace Web.Controllers
 
 
         [HttpPost("crear-preferencia")]
-        [Authorize] // opcional, si querés que solo usuarios logueados puedan pagar
+        [Authorize] 
         public async Task<IActionResult> CrearPreferencia([FromBody] CrearPreferenciaRequest request)
         {
             try
             {
-                var initPoint = await _mercadoPagoService.CrearPreferenciaAsync(request.Titulo, request.Precio, request.Cantidad);
+                var initPoint = await _mercadoPagoService.CrearPreferenciaAsync(request.Titulo, request.Precio, request.Cantidad, request.cuotaId, request.userId);
                 return Ok(new { url = initPoint });
             }
             catch (System.Exception ex)
@@ -38,5 +38,7 @@ namespace Web.Controllers
         public string Titulo { get; set; } = "";
         public decimal Precio { get; set; }
         public int Cantidad { get; set; }
+        public int cuotaId { get; set; }
+        public int userId { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
 using Domain.Interfaces;
 using MercadoPago.Client.Preference;
 using MercadoPago.Config;
@@ -17,7 +18,7 @@ namespace Infrastructure.Services
         }
 
         // Método para crear preferencia
-        public async Task<string> CrearPreferenciaAsync(string titulo, decimal precio, int cantidad)
+        public async Task<string> CrearPreferenciaAsync(string titulo, decimal precio, int cantidad, int cuotaId, int userId)
         {
             try
             {
@@ -36,10 +37,11 @@ namespace Infrastructure.Services
                     BackUrls = new PreferenceBackUrlsRequest
                     {
 
-                        Success = "https://localhost:5173/pago-exitoso",
+                        Success = $"https://localhost:5173/pago-exitoso?userId={userId}&cuotaId={cuotaId}",
                         Failure = "https://localhost:5173/pago-fallido",
                         Pending = "https://localhost:5173/pago-pendiente"
                     },
+                    ExternalReference = cuotaId.ToString(), 
                     AutoReturn = "approved"
                 };
 
@@ -50,7 +52,7 @@ namespace Infrastructure.Services
             catch (Exception ex)
             {
                 
-                Console.WriteLine("🔥 Error al crear preferencia: " + ex.Message);
+                Console.WriteLine("Error al crear preferencia: " + ex.Message);
                 throw; 
             }
         }

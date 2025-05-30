@@ -68,6 +68,9 @@ namespace Application.Services
                 MonthlyFeeId = p.MonthlyFeeId,
                 Price = p.MonthlyFee.Price,
                 Period = $"{MesNombre(p.MonthlyFee.Month)} {p.MonthlyFee.Year}",
+                Month = p.MonthlyFee.Month,           
+                Year = p.MonthlyFee.Year,             
+                DueDate = p.MonthlyFee.DueDate,
                 Paid = p.Paid,
                 PaymentDate = p.PaymentDate
             }).ToList();

@@ -2,6 +2,7 @@
 using Application.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -12,6 +13,11 @@ namespace Web.Controllers
     {
         private readonly IMonthlyFeeService _service;
 
+        private int GetAuthenticatedUserId()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            return userIdClaim != null ? int.Parse(userIdClaim.Value) : -1;
+        }
         public MonthlyFeeController(IMonthlyFeeService service)
         {
             _service = service;
@@ -36,6 +42,8 @@ namespace Web.Controllers
             var fee = _service.GetByMonthYear(month, year);
             return fee == null ? NotFound() : Ok(fee);
         }
+
+       
     }
 
 }
