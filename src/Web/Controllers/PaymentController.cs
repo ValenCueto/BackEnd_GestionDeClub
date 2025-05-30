@@ -2,6 +2,7 @@
 using Application.Models.Request;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -12,6 +13,11 @@ namespace Web.Controllers
     {
         private readonly IPaymentService _service;
 
+        private int GetAuthenticatedUserId()
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+            return userIdClaim != null ? int.Parse(userIdClaim.Value) : -1;
+        }
         public PaymentController(IPaymentService service)
         {
             _service = service;
@@ -41,6 +47,13 @@ namespace Web.Controllers
         [HttpGet("user/{userId}")]
         public IActionResult GetByUser(int userId)
         {
+            return Ok(_service.GetByUserId(userId));
+        }
+
+        [HttpGet("[Action]")]
+        public IActionResult GetByCurrentUser()
+        {
+            var userId = GetAuthenticatedUserId();
             return Ok(_service.GetByUserId(userId));
         }
     }

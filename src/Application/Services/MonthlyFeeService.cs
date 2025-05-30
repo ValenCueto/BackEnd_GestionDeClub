@@ -9,10 +9,12 @@ namespace Application.Services
     public class MonthlyFeeService : IMonthlyFeeService
     {
         private readonly IMonthlyFeeRepository _repository;
+        private readonly IUserRepository _userRepository;
 
-        public MonthlyFeeService(IMonthlyFeeRepository repository)
+        public MonthlyFeeService(IMonthlyFeeRepository repository, IUserRepository userRepository)
         {
             _repository = repository;
+            _userRepository = userRepository;
         }
 
         public void Create(MonthlyFeeCreateRequest request)
@@ -59,5 +61,22 @@ namespace Application.Services
                 DueDate = fee.DueDate
             };
         }
+
+        //public MonthlyFeeDtoResponse? GetByMonthYearUser(int month, int year, int id)
+        //{
+        //    var fee = _repository.GetByMonthYear(month, year);
+        //    var user = _userRepository.GetById(id);
+        //    if (fee == null) return null;
+
+        //    return new MonthlyFeeUserResponse
+        //    {
+        //        User = user.Id,
+        //        Id = fee.Id,
+        //        Price = fee.Price,
+        //        Month = fee.Month,
+        //        Year = fee.Year,
+        //        DueDate = fee.DueDate
+        //    };
+        //}
     }
 }

@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IMercadoPagoService
     {
-        Task<string> CrearPreferenciaAsync(string titulo, decimal precio, int cantidad);
+        Task<string> CrearPreferenciaAsync(string titulo, decimal precio, int cantidad, int cuotaId, int userId);
     }
 }
