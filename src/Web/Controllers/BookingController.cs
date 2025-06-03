@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Application.Interfaces;
 using Application.Models.Request;
+using Application.Models.Response;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,17 +43,8 @@ namespace Web.Controllers
         [HttpGet("GetAllBookings")]
         public IActionResult GetAllBookings()
         {
-            List<Booking> bookings = _bookingService.GetAllBookings();
+            List<BookingResponseDto> bookings = _bookingService.GetAllBookings();
             return Ok(bookings);
-        }
-
-        [HttpPut("[action]/{bookingId}")]
-        public IActionResult AssignBooking(int bookingId)
-        {
-            //var userId = GetAuthenticatedUserId();
-            //_userService.AssignBooking(bookingId, userId);
-            //_bookingService.AssignUser(bookingId, userId);
-            return Ok();
         }
     }
 }

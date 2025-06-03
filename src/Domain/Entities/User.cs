@@ -5,7 +5,8 @@ namespace Domain.Entities
 
     public class User
     {
-        private List<Booking> _bookings;
+        private List<Booking> _bookings = new List<Booking>();
+        public IReadOnlyList<Booking> Bookings => _bookings.AsReadOnly();
         public int Id { get; set; }
         public int? SubscriptionId { get; set; }
         public string Name { get; set; }
@@ -16,7 +17,6 @@ namespace Domain.Entities
         public bool State { get; set; }
         public bool Paid { get; set; }
         public Subscription Subscription { get; set; }
-        public IReadOnlyCollection<Booking> Bookings => _bookings;
         public string? ResetPasswordToken { get; set; }
         public DateTime? ResetPasswordTokenExpiry { get; set; }
 
