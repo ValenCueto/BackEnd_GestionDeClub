@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.Models.Request;
+using Application.Models.Response;
 using Domain.Entities;
 using Domain.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -68,17 +69,10 @@ namespace Application.Services
             }
         }
 
-        public List<Booking> GetAllBookings()
+        public List<BookingResponseDto> GetAllBookings()
         {
-            return _bookingRepository.GetAllBookings(); 
-        }
-
-        public void AssignUser(int bookingId, int userId)
-        {
-            Booking booking = _bookingRepository.GetById(bookingId);
-            User user = _userRepository.GetById(userId);
-            booking.User = user;
-            _bookingRepository.Update(booking);
+            List<Booking> bookings = _bookingRepository.GetAllBookings();
+            return bookings.Select(BookingResponseDto.Create).ToList();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Models.Request;
+using Application.Models.Response;
 using Domain.Entities;
 
 namespace Application.Interfaces
@@ -11,8 +12,6 @@ namespace Application.Interfaces
     public interface IBookingService
     {
         void CreateBooking(BookingCreateRequest request);
-        List<Booking> GetAllBookings();
-
-        void AssignUser(int bookingId, int userId);
+        List<BookingResponseDto> GetAllBookings();
     }
 }

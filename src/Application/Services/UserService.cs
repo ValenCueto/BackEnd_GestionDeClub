@@ -102,16 +102,14 @@ namespace Application.Services
             return userToResponse;
         }
         
-
         public void AssignBooking(int bookingId, int userId)
         {
-            User user = _userRepository.GetById(userId);
-            Booking booking = _bookingRepository.GetById(bookingId);
+            User user = _userRepository.GetById(userId) ?? throw new Exception("User not Found");
+            Booking booking = _bookingRepository.GetById(bookingId) ?? throw new Exception("Booking not Found");
             user.AddBooking(booking);
+            booking.User = user;
+            booking.Available = false;
+            _bookingRepository.Update(booking);
         }
-
-
-
-
     }
 }

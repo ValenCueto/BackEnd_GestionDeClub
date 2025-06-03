@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
 using Application.Models.Response;
+using Application.Services;
 using Domain.Entities;
 using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,7 @@ namespace Web.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IBookingService _bookingService;
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -155,6 +157,12 @@ namespace Web.Controllers
             return Ok(_userService.GetCurrent(userId));
         }
 
-
+        [HttpPut("[action]/{bookingId}")]
+        public IActionResult AssignBooking(int bookingId)
+        {
+            int userId = GetAuthenticatedUserId();
+            _userService.AssignBooking(bookingId, userId);
+            return Ok();
+        }
     }
 }
