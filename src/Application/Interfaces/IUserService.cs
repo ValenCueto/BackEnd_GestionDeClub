@@ -18,5 +18,6 @@ namespace Application.Interfaces
         void DeactivateUser(int userId);
         List<UserDtoResponse> GetAll();
         UserCurrentDtoResponse GetCurrent(int userId);
+        void AssignBooking(int bookingId, int userId);
     }
 }

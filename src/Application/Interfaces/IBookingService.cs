@@ -12,5 +12,7 @@ namespace Application.Interfaces
     {
         void CreateBooking(BookingCreateRequest request);
         List<Booking> GetAllBookings();
+
+        void AssignUser(int bookingId, int userId);
     }
 }

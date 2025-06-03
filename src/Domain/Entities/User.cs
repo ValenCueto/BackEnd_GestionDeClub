@@ -6,7 +6,6 @@ namespace Domain.Entities
     public class User
     {
         private List<Booking> _bookings;
-
         public int Id { get; set; }
         public int? SubscriptionId { get; set; }
         public string Name { get; set; }
@@ -18,7 +17,6 @@ namespace Domain.Entities
         public bool Paid { get; set; }
         public Subscription Subscription { get; set; }
         public IReadOnlyCollection<Booking> Bookings => _bookings;
-
         public string? ResetPasswordToken { get; set; }
         public DateTime? ResetPasswordTokenExpiry { get; set; }
 
@@ -35,10 +33,7 @@ namespace Domain.Entities
 
         public void AddBooking(Booking booking)
         {
-            //Reglas de negocios
-            //Validar estado, subscripcion
-
-            //Bookings.Add(booking);
+            _bookings.Add(booking);
         }
         
     }

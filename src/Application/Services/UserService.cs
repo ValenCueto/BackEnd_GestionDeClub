@@ -10,10 +10,11 @@ namespace Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-
-        public UserService(IUserRepository userRepository)
+        private readonly IBookingRepository _bookingRepository;
+        public UserService(IUserRepository userRepository, IBookingRepository bookingRepository)
         {
             _userRepository = userRepository;
+            _bookingRepository = bookingRepository;
         }
         public void CreateUser(UserCreateRequest request)
         {
@@ -100,7 +101,17 @@ namespace Application.Services
             };
             return userToResponse;
         }
+        
 
-      
+        public void AssignBooking(int bookingId, int userId)
+        {
+            User user = _userRepository.GetById(userId);
+            Booking booking = _bookingRepository.GetById(bookingId);
+            user.AddBooking(booking);
+        }
+
+
+
+
     }
 }

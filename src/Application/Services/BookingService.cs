@@ -16,12 +16,14 @@ namespace Application.Services
         private readonly IBookingRepository _bookingRepository;
         private readonly IAvailabilityRepository _availabilityRepository;
         private readonly ICourtRepository _courtRepository;
+        private readonly IUserRepository _userRepository;
 
-        public BookingService(IBookingRepository bookingRepository, ICourtRepository courtRepository, IAvailabilityRepository availabilityRepository)
+        public BookingService(IBookingRepository bookingRepository, ICourtRepository courtRepository, IAvailabilityRepository availabilityRepository, IUserRepository userRepository)
         {
             _bookingRepository = bookingRepository;
             _courtRepository = courtRepository;
             _availabilityRepository = availabilityRepository;
+            _userRepository = userRepository;
         }
 
         public void CreateBooking(BookingCreateRequest request)
@@ -69,6 +71,14 @@ namespace Application.Services
         public List<Booking> GetAllBookings()
         {
             return _bookingRepository.GetAllBookings(); 
+        }
+
+        public void AssignUser(int bookingId, int userId)
+        {
+            Booking booking = _bookingRepository.GetById(bookingId);
+            User user = _userRepository.GetById(userId);
+            booking.User = user;
+            _bookingRepository.Update(booking);
         }
     }
 }
