@@ -2,6 +2,7 @@
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
 
 namespace Application.Services
@@ -35,6 +36,31 @@ namespace Application.Services
             _repository.Add(fee);
         }
 
+        public void Update(MonthlyFeeUpdateRequest request, int monthlyFeeId)
+        {
+            var monthlyFee = _repository.GetById(monthlyFeeId);
+            if (monthlyFee == null)
+            {
+                throw new NotFoundException("No se encontró la cuota");
+            }
+
+            monthlyFee.Price = request.Price;
+            monthlyFee.Month = request.Month;  
+            monthlyFee.Year = request.Year;
+
+            _repository.Update(monthlyFee);
+        }
+
+        public void Delete(int monthlyFeeId)
+        {
+            var monthlyFee = _repository.GetById(monthlyFeeId);
+            if (monthlyFee == null)
+            {
+                throw new NotFoundException("No se encontró la cuota");
+            }
+
+            _repository.Delete(monthlyFee);
+        }
         public List<MonthlyFeeDtoResponse> GetAll()
         {
             return _repository.GetAll().Select(f => new MonthlyFeeDtoResponse
