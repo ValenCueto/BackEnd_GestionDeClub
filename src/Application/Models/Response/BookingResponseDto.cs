@@ -11,6 +11,7 @@ namespace Application.Models.Response
 {
     public class BookingResponseDto
     {
+        public int Id { get; set; }
         public DateTime StartTime { get; set; }
 
         public DateTime FinishTime { get; set; }
@@ -26,6 +27,7 @@ namespace Application.Models.Response
         {
             var dto = new BookingResponseDto
             {
+                Id = booking.Id,
                 StartTime = booking.StartTime,
                 FinishTime = booking.FinishTime,
                 Available = booking.Available,

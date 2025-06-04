@@ -157,7 +157,8 @@ namespace Web.Controllers
             return Ok(_userService.GetCurrent(userId));
         }
 
-        [HttpPut("[action]/{bookingId}")]
+        [Authorize(Roles = "Client,Admin")]
+        [HttpPut("AssignBooking/{bookingId}")]
         public IActionResult AssignBooking(int bookingId)
         {
             int userId = GetAuthenticatedUserId();
@@ -165,6 +166,7 @@ namespace Web.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Client,Admin")]
         [HttpPut("[Action]")]
         public IActionResult MarkUserPaid()
         {
