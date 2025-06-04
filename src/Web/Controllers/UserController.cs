@@ -164,5 +164,13 @@ namespace Web.Controllers
             _userService.AssignBooking(bookingId, userId);
             return Ok();
         }
+
+        [HttpPut("[Action]")]
+        public IActionResult MarkUserPaid()
+        {
+            int userId = GetAuthenticatedUserId();
+            _userService.MarkUserPaid(userId);
+            return Ok();
+        }
     }
 }
