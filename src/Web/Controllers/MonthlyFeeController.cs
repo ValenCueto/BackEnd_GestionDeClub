@@ -1,5 +1,8 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
+using Application.Models.Response;
+using Application.Services;
+using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -43,7 +46,25 @@ namespace Web.Controllers
             return fee == null ? NotFound() : Ok(fee);
         }
 
-       
+        [Authorize]
+        [HttpPut("[Action]/{monthlyFeeId}")]
+        public IActionResult UpdateMonthlyFee([FromBody] MonthlyFeeUpdateRequest request, int monthlyFeeId)
+        {
+         
+             _service.Update(request, monthlyFeeId);
+              return Ok("Cuota editada exitosamente");  
+        }
+
+        [Authorize]
+        [HttpDelete("[Action]/{monthlyFeeId}")]
+        public IActionResult DeleteMonthlyFee(int monthlyFeeId)
+        {
+           _service.Delete(monthlyFeeId);
+            return Ok();
+        }
+
+
+
     }
 
 }
