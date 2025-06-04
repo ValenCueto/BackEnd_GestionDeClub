@@ -111,5 +111,12 @@ namespace Application.Services
             booking.Available = false;
             _bookingRepository.Update(booking);
         }
+
+        public void MarkUserPaid(int userId) 
+        {
+            User user = _userRepository.GetById(userId);
+            user.Paid = true;
+            _userRepository.Update(user);
+        }
     }
 }
