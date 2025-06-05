@@ -41,7 +41,7 @@ namespace Application.Services
         {
             User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             var existingUserEmail = _userRepository.GetByEmail(request.Email);
-            if (existingUserEmail is not null && userToEdit.Id != userId)
+            if (existingUserEmail is not null && existingUserEmail.Id != userId)
             {
                 throw new BadRequestException("Ya existe un usuario con ese email");
             }
@@ -59,7 +59,7 @@ namespace Application.Services
         {
             User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
             var existingUserEmail = _userRepository.GetByEmail(request.Email);
-            if (existingUserEmail is not null && userToEdit.Id != userId)
+            if (existingUserEmail is not null && existingUserEmail.Id != userId)
             {
                 throw new BadRequestException("Ya existe un usuario con ese email");
             }
