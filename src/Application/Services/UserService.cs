@@ -11,10 +11,14 @@ namespace Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IBookingRepository _bookingRepository;
-        public UserService(IUserRepository userRepository, IBookingRepository bookingRepository)
+        private readonly IMonthlyFeeRepository _monthlyFeeRepository;
+        private readonly IPaymentRepository _paymentRepository;
+        public UserService(IUserRepository userRepository, IBookingRepository bookingRepository, IMonthlyFeeRepository monthlyFeeRepository, IPaymentRepository paymentRepository)
         {
             _userRepository = userRepository;
             _bookingRepository = bookingRepository;
+            _monthlyFeeRepository = monthlyFeeRepository;
+            _paymentRepository = paymentRepository;
         }
         public void CreateUser(UserCreateRequest request)
         {
@@ -106,6 +110,17 @@ namespace Application.Services
         {
             User user = _userRepository.GetById(userId) ?? throw new Exception("User not Found");
             Booking booking = _bookingRepository.GetById(bookingId) ?? throw new Exception("Booking not Found");
+
+            var now = DateTime.Now;
+            var currentFee = _monthlyFeeRepository.GetByMonthYear(now.Month, now.Year);
+            if (currentFee == null)
+                throw new BadRequestException("No hay cuota configurada para este mes");
+
+            var payment = _paymentRepository.GetByUserAndFee(userId, currentFee.Id);
+
+            if (payment == null || !payment.Paid)
+                throw new BadRequestException("No podes reservar porque no tenes la cuota del mes paga.");
+
             user.AddBooking(booking);
             booking.User = user;
             booking.Available = false;
