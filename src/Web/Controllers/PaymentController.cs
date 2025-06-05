@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
+using Application.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -59,6 +60,13 @@ namespace Web.Controllers
         {
             var userId = GetAuthenticatedUserId();
             return Ok(_service.GetByUserId(userId));
+        }
+
+        [Authorize(Roles = "Gerente")]
+        [HttpGet("[Action]")]
+        public IActionResult GetCurrentMonthRevenue()
+        {
+                return Ok(_service.GetCurrentMonthRevenue());
         }
     }
 }

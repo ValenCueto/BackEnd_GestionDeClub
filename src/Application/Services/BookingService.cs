@@ -74,5 +74,24 @@ namespace Application.Services
             List<Booking> bookings = _bookingRepository.GetAllBookings();
             return bookings.Select(BookingResponseDto.Create).ToList();
         }
+
+        public List<HourUsageDtoResponse> GetMostFrequentBookingHours()
+        {
+            var mostFrequentHours = _bookingRepository.GetMostFrequentBookingHours();
+            var responseList = new List<HourUsageDtoResponse>();
+
+            foreach (var hour in mostFrequentHours)
+            {
+                responseList.Add(new HourUsageDtoResponse
+                {
+                    Hour = hour.Hour,
+                    Count = hour.Count
+                });
+            }
+            return responseList;
+        }
+
+
+
     }
 }

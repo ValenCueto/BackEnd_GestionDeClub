@@ -34,6 +34,9 @@ namespace Infrastructure.Data
                 u.ResetPasswordTokenExpiry > DateTime.UtcNow);
         }
 
-
+        public List<User> GetActiveUsers()
+        {
+            return _dbContext.Users.Where(u => u.State == true).ToList();
+        }
     }
 }

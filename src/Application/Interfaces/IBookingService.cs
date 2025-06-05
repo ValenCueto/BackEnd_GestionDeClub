@@ -13,5 +13,6 @@ namespace Application.Interfaces
     {
         void CreateBooking(BookingCreateRequest request);
         List<BookingResponseDto> GetAllBookings();
+        List<HourUsageDtoResponse> GetMostFrequentBookingHours();
     }
 }

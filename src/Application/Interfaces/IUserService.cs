@@ -21,5 +21,6 @@ namespace Application.Interfaces
         void AssignBooking(int bookingId, int userId);
         void CancelBooking(int bookingId, int userId);
         void MarkUserPaid(int userId);
+        List<UserCurrentDtoResponse> GetActivesUsers();
     }
 }
