@@ -1,15 +1,11 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
-using Application.Models.Response;
-using Application.Services;
-using Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles = "Admin,Gerente")]
     [Route("api/[controller]")]
     [ApiController]
     public class MonthlyFeeController : ControllerBase
@@ -26,6 +22,7 @@ namespace Web.Controllers
             _service = service;
         }
 
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpPost]
         public IActionResult Create([FromBody] MonthlyFeeCreateRequest request)
         {
@@ -33,12 +30,14 @@ namespace Web.Controllers
             return Ok("Cuota mensual creada");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_service.GetAll());
         }
 
+        [Authorize]
         [HttpGet("{month}/{year}")]
         public IActionResult GetByMonthYear(int month, int year)
         {
@@ -46,7 +45,7 @@ namespace Web.Controllers
             return fee == null ? NotFound() : Ok(fee);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpPut("[Action]/{monthlyFeeId}")]
         public IActionResult UpdateMonthlyFee([FromBody] MonthlyFeeUpdateRequest request, int monthlyFeeId)
         {
@@ -55,7 +54,7 @@ namespace Web.Controllers
               return Ok("Cuota editada exitosamente");  
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpDelete("[Action]/{monthlyFeeId}")]
         public IActionResult DeleteMonthlyFee(int monthlyFeeId)
         {
