@@ -11,6 +11,8 @@ namespace Application.Interfaces
     public interface IMonthlyFeeService
     {
         void Create(MonthlyFeeCreateRequest request);
+        void Update(MonthlyFeeUpdateRequest request, int monthlyFeeId);
+        void Delete(int monthlyFeeId);
         List<MonthlyFeeDtoResponse> GetAll();
         MonthlyFeeDtoResponse? GetByMonthYear(int month, int year);
     }

@@ -7,7 +7,6 @@ using System.Security.Claims;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles = "Admin,Gerente")]
     [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : ControllerBase
@@ -24,6 +23,7 @@ namespace Web.Controllers
             _service = service;
         }
 
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpPost("assign-all/{monthlyFeeId}")]
         public IActionResult AssignToAll(int monthlyFeeId)
         {
@@ -31,6 +31,7 @@ namespace Web.Controllers
             return Ok("Cuotas asignadas a todos los usuarios");
         }
 
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpPost("assign-one")]
         public IActionResult AssignToUser([FromBody] MarkPaymentRequest request)
         {
@@ -38,6 +39,7 @@ namespace Web.Controllers
             return Ok("Cuota asignada al usuario");
         }
 
+        [Authorize]
         [HttpPut("mark-paid")]
         public IActionResult MarkAsPaid([FromBody] MarkPaymentRequest request)
         {
@@ -45,12 +47,14 @@ namespace Web.Controllers
             return Ok("Pago registrado");
         }
 
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpGet("user/{userId}")]
         public IActionResult GetByUser(int userId)
         {
             return Ok(_service.GetByUserId(userId));
         }
 
+        [Authorize]
         [HttpGet("[Action]")]
         public IActionResult GetByCurrentUser()
         {

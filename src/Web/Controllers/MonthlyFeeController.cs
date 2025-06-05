@@ -6,7 +6,6 @@ using System.Security.Claims;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles = "Admin,Gerente")]
     [Route("api/[controller]")]
     [ApiController]
     public class MonthlyFeeController : ControllerBase
@@ -23,6 +22,7 @@ namespace Web.Controllers
             _service = service;
         }
 
+        [Authorize(Roles = "Admin,Gerente")]
         [HttpPost]
         public IActionResult Create([FromBody] MonthlyFeeCreateRequest request)
         {
@@ -30,12 +30,14 @@ namespace Web.Controllers
             return Ok("Cuota mensual creada");
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(_service.GetAll());
         }
 
+        [Authorize]
         [HttpGet("{month}/{year}")]
         public IActionResult GetByMonthYear(int month, int year)
         {
@@ -43,7 +45,25 @@ namespace Web.Controllers
             return fee == null ? NotFound() : Ok(fee);
         }
 
-       
+        [Authorize(Roles = "Admin,Gerente")]
+        [HttpPut("[Action]/{monthlyFeeId}")]
+        public IActionResult UpdateMonthlyFee([FromBody] MonthlyFeeUpdateRequest request, int monthlyFeeId)
+        {
+         
+             _service.Update(request, monthlyFeeId);
+              return Ok("Cuota editada exitosamente");  
+        }
+
+        [Authorize(Roles = "Admin,Gerente")]
+        [HttpDelete("[Action]/{monthlyFeeId}")]
+        public IActionResult DeleteMonthlyFee(int monthlyFeeId)
+        {
+           _service.Delete(monthlyFeeId);
+            return Ok();
+        }
+
+
+
     }
 
 }
