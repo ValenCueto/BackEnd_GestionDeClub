@@ -167,6 +167,15 @@ namespace Web.Controllers
         }
 
         [Authorize(Roles = "Client,Admin")]
+        [HttpPut("CancelBooking/{bookingId}")]
+        public IActionResult CancelBooking(int bookingId)
+        {
+            int userId = GetAuthenticatedUserId();
+            _userService.CancelBooking(bookingId, userId);
+            return Ok();
+        }
+
+        [Authorize(Roles = "Client,Admin")]
         [HttpPut("[Action]")]
         public IActionResult MarkUserPaid()
         {

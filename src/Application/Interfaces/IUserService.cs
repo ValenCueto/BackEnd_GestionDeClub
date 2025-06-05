@@ -19,6 +19,7 @@ namespace Application.Interfaces
         List<UserDtoResponse> GetAll();
         UserCurrentDtoResponse GetCurrent(int userId);
         void AssignBooking(int bookingId, int userId);
+        void CancelBooking(int bookingId, int userId);
         void MarkUserPaid(int userId);
     }
 }

@@ -35,6 +35,11 @@ namespace Domain.Entities
         {
             _bookings.Add(booking);
         }
+
+        public void RemoveBooking(Booking booking)
+        {
+            _bookings.Remove(booking);
+        }
         
     }
 }
