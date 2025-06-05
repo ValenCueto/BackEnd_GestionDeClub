@@ -26,8 +26,8 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] MonthlyFeeCreateRequest request)
         {
-            _service.Create(request);
-            return Ok("Cuota mensual creada");
+            var newFee = _service.Create(request);
+            return Ok(newFee);
         }
 
         [Authorize]
