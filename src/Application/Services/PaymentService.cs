@@ -76,6 +76,11 @@ namespace Application.Services
             }).ToList();
         }
 
+        public decimal GetCurrentMonthRevenue()
+        {
+            return _paymentRepository.GetCurrentMonthRevenue();
+        }
+
         private string MesNombre(int mes)
         {
             return new[] {

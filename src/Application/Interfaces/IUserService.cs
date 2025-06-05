@@ -20,5 +20,6 @@ namespace Application.Interfaces
         UserCurrentDtoResponse GetCurrent(int userId);
         void AssignBooking(int bookingId, int userId);
         void MarkUserPaid(int userId);
+        List<UserCurrentDtoResponse> GetActivesUsers();
     }
 }

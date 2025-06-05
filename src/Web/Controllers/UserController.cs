@@ -174,5 +174,12 @@ namespace Web.Controllers
             _userService.MarkUserPaid(userId);
             return Ok();
         }
+
+        [Authorize(Roles = "Gerente")]
+        [HttpGet("[Action]")]
+        public IActionResult GetActivesUsers()
+        {
+                return Ok(_userService.GetActivesUsers());
+        }
     }
 }

@@ -118,5 +118,21 @@ namespace Application.Services
             user.Paid = true;
             _userRepository.Update(user);
         }
+
+        public List<UserCurrentDtoResponse> GetActivesUsers()
+        {
+            var usersActives = _userRepository.GetActiveUsers();
+            var usersActivesList = new List<UserCurrentDtoResponse>();
+            foreach (var user in usersActives)
+            {
+                usersActivesList.Add(new UserCurrentDtoResponse
+                {
+                    Name = user.Name,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber
+                });
+            }
+            return usersActivesList;
+        }
     }
 }

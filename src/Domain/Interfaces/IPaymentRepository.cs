@@ -12,7 +12,6 @@ namespace Domain.Interfaces
         bool Exists(int userId, int monthlyFeeId);
         Payment? GetByUserAndFee(int userId, int monthlyFeeId);
         List<Payment> GetByUserId(int userId);
-        
-
+        decimal GetCurrentMonthRevenue();
     }
 }

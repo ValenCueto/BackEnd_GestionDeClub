@@ -1,9 +1,10 @@
-﻿using System.Security.Claims;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Web.Controllers
 {
@@ -45,6 +46,13 @@ namespace Web.Controllers
         {
             List<BookingResponseDto> bookings = _bookingService.GetAllBookings();
             return Ok(bookings);
+        }
+
+        [Authorize(Roles = "Gerente")]
+        [HttpGet("[Action]")]
+        public IActionResult GetMostFrequentBookingHours()
+        {
+                return Ok(_bookingService.GetMostFrequentBookingHours());
         }
     }
 }

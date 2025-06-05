@@ -36,5 +36,17 @@ namespace Infrastructure.Data
                 .ToList();
         }
 
+        public decimal GetCurrentMonthRevenue()
+        {
+            var now = DateTime.UtcNow;
+            int currentMonth = now.Month;
+            int currentYear = now.Year;
+
+            return _dbContext.Payments
+                .Where(p => p.Paid == true &&
+                            p.MonthlyFee.Month == currentMonth &&
+                            p.MonthlyFee.Year == currentYear)
+                .Sum(p => (decimal)p.MonthlyFee.Price);
+        }
     }
 }
