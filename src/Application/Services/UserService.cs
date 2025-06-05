@@ -131,6 +131,12 @@ namespace Application.Services
         {
             User user = _userRepository.GetById(userId) ?? throw new Exception("User not Found");
             Booking booking = _bookingRepository.GetById(bookingId) ?? throw new Exception("Booking not Found");
+         
+            if (booking.User == null || booking.User.Id != userId)
+            {
+                throw new BadRequestException("Booking does not belong to this user");
+            }
+
             user.RemoveBooking(booking);
             booking.User = null;
             booking.Available = true;

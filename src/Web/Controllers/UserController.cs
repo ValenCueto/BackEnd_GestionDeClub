@@ -177,9 +177,9 @@ namespace Web.Controllers
         [HttpPut("CancelBooking/{bookingId}")]
         public IActionResult CancelBooking(int bookingId)
         {
-            int userId = GetAuthenticatedUserId();
+            var userId = GetAuthenticatedUserId();
             _userService.CancelBooking(bookingId, userId);
-            return Ok();
+               return Ok();
         }
 
         [Authorize(Roles = "Client,Admin")]
