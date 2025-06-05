@@ -112,6 +112,16 @@ namespace Application.Services
             _bookingRepository.Update(booking);
         }
 
+        public void CancelBooking(int bookingId, int userId)
+        {
+            User user = _userRepository.GetById(userId) ?? throw new Exception("User not Found");
+            Booking booking = _bookingRepository.GetById(bookingId) ?? throw new Exception("Booking not Found");
+            user.RemoveBooking(booking);
+            booking.User = null;
+            booking.Available = true;
+            _bookingRepository.Update(booking);
+        }
+
         public void MarkUserPaid(int userId) 
         {
             User user = _userRepository.GetById(userId);
