@@ -161,9 +161,16 @@ namespace Web.Controllers
         [HttpPut("AssignBooking/{bookingId}")]
         public IActionResult AssignBooking(int bookingId)
         {
-            int userId = GetAuthenticatedUserId();
-            _userService.AssignBooking(bookingId, userId);
-            return Ok();
+            try
+            {
+                int userId = GetAuthenticatedUserId();
+                _userService.AssignBooking(bookingId, userId);
+                return Ok(new { message = "Reserva asignada correctamente." });
+            }
+            catch (BadRequestException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }            
         }
 
         [Authorize(Roles = "Client,Admin")]

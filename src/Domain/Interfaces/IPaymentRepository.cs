@@ -13,6 +13,7 @@ namespace Domain.Interfaces
         Payment? GetByUserAndFee(int userId, int monthlyFeeId);
         List<Payment> GetByUserId(int userId);
         
+        
 
     }
 }
