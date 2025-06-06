@@ -18,7 +18,7 @@ namespace Application.Services
             _userRepository = userRepository;
         }
 
-        public void Create(MonthlyFeeCreateRequest request)
+        public int Create(MonthlyFeeCreateRequest request)
         {
             if (_repository.GetByMonthYear(request.Month, request.Year) != null)
                 throw new Exception("Ya existe una cuota para ese mes y año.");
@@ -34,6 +34,7 @@ namespace Application.Services
             };
 
             _repository.Add(fee);
+            return fee.Id;
         }
 
         public void Update(MonthlyFeeUpdateRequest request, int monthlyFeeId)
