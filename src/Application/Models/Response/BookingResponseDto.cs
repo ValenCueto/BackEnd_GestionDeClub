@@ -22,6 +22,7 @@ namespace Application.Models.Response
 
         public int CourtId { get; set; }
 
+        public string UserName { get; set; }
 
         public static BookingResponseDto Create(Booking booking)
         {
@@ -32,7 +33,8 @@ namespace Application.Models.Response
                 FinishTime = booking.FinishTime,
                 Available = booking.Available,
                 UserEmail = booking.User?.Email,
-                CourtId = booking.Court.Id
+                CourtId = booking.Court.Id,
+                UserName = booking.User?.Name,
 
             };
             return dto;
