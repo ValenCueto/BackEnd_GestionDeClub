@@ -17,10 +17,13 @@ namespace Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IBookingService _bookingService;
-        public UserController(IUserService userService)
+
+        public UserController(IUserService userService, IBookingService bookingService)
         {
             _userService = userService;
+            _bookingService = bookingService;
         }
+
         private int GetAuthenticatedUserId()
         {
             var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
@@ -30,123 +33,68 @@ namespace Web.Controllers
         [HttpPost("CreateUser")]
         public IActionResult CreateUser([FromBody] UserCreateRequest request)
         {
-            try
-            {
-                _userService.CreateUser(request);
-                return Ok("Usuario creado exitosamente");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            _userService.CreateUser(request);
+            return Ok();
         }
 
         [Authorize]
         [HttpPut("[Action]")]
         public IActionResult UpdateCurrentUser([FromBody] UserCurrentDtoResponse request)
         {
-            try
-            {
-                var userId = GetAuthenticatedUserId();
-                _userService.UpdateCurrentUser(request, userId);
-                return Ok("Usuario editado exitosamente");
-            }
-            catch (BadRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            var userId = GetAuthenticatedUserId();
+            _userService.UpdateCurrentUser(request, userId);
+            return Ok();
         }
 
         [Authorize(Roles = "Admin,Gerente")]
         [HttpPut("UpdateUser/{userId}")]
         public IActionResult UpdateUser([FromBody] UserUpdateRequest request, [FromRoute] int userId)
         {
-            try
-            {
-                _userService.UpdateUser(request, userId);
-                return Ok("Usuario editado exitosamente");
-            }
-            catch (BadRequestException ex)
-            {
-                return BadRequest(new { message = ex.Message });
-            }
+            _userService.UpdateUser(request, userId);
+            return Ok("Usuario editado exitosamente");
         }
 
         [Authorize(Roles = "Client")]
         [HttpDelete("DeleteUser/current")]
         public IActionResult DeleteUser()
         {
-            try
-            {
-                var userId = GetAuthenticatedUserId();
-                _userService.DeleteUser(userId);
-                return Ok($"user {userId} eliminado correctamente");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var userId = GetAuthenticatedUserId();
+            _userService.DeleteUser(userId);
+            return Ok($"user {userId} eliminado correctamente");
         }
 
         [Authorize(Roles = "Admin,Gerente")]
         [HttpDelete("DeleteUser/{userId}")]
         public IActionResult DeleteUser([FromRoute] int userId)
         {
-            try
-            {
-                _userService.DeleteUser(userId);
-                return Ok($"user {userId} eliminado correctamente");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _userService.DeleteUser(userId);
+            return Ok($"user {userId} eliminado correctamente");
         }
 
         [Authorize(Roles = "Client")]
         [HttpPut("UpdateUserState/current")]
         public IActionResult DeactivateUser()
         {
-            try
-            {
-                var userId = GetAuthenticatedUserId();
-                _userService.DeactivateUser(userId);
-                return Ok($"user {userId} eliminado correctamente");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var userId = GetAuthenticatedUserId();
+            _userService.DeactivateUser(userId);
+            return Ok();
         }
 
         [Authorize(Roles = "Admin,Gerente")]
         [HttpPut("UpdateUserState/{userId}")]
         public IActionResult DeactivateUser([FromRoute] int userId)
         {
-            try
-            {
-                _userService.DeactivateUser(userId);
-                return Ok($"user {userId} eliminado correctamente");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+
+            _userService.DeactivateUser(userId);
+            return Ok($"user {userId} eliminado correctamente");
         }
 
         [Authorize(Roles = "Admin,Gerente")]
         [HttpGet("GetAllUsers")]
         public IActionResult GetAllUsers()
         {
-            try
-            {
-                List<UserDtoResponse> users = _userService.GetAll();
-                return Ok(users);
-            }
-            catch (Exception ex) 
-            { 
-                return BadRequest(ex);
-            }
+            List<UserDtoResponse> users = _userService.GetAll();
+            return Ok(users);
         }
 
         [Authorize(Roles = "Client,Admin")]

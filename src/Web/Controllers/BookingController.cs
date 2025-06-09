@@ -20,25 +20,12 @@ namespace Web.Controllers
             _userService = userService;
         }
 
-        private int GetAuthenticatedUserId()
-        {
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            return userIdClaim != null ? int.Parse(userIdClaim.Value) : -1;
-        }
-
         [HttpPost("CreateBooking")]
         public IActionResult CreateBooking([FromBody] BookingCreateRequest request)
         {
-            try
-            {
-                _bookingService.CreateBooking(request);
-                return Ok();
-                //CreatedAtAction()
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            _bookingService.CreateBooking(request);
+            return Ok();
+            //CreatedAtAction()            
         }
         [HttpGet("GetAllBookings")]
         public IActionResult GetAllBookings()

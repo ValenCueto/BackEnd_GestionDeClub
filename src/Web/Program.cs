@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
+using Web.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -100,6 +101,7 @@ builder.Services.AddScoped<IRecoverPassword, RecoverPassword>();
 //MERCADOPAGO
 builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 
+builder.Services.AddTransient<GlobalExceptionHandlingMiddleware>();
 #endregion
 
 //CORS para conexion con el front
@@ -116,6 +118,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -128,7 +132,6 @@ app.UseStaticFiles();
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontendDev");
-
 
 app.UseAuthentication();
 

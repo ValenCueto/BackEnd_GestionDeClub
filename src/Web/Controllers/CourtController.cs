@@ -27,12 +27,6 @@ namespace Web.Controllers
         public IActionResult GetCourtById(int id)
         {
             var court = _courtService.GetById(id);
-
-            if (court == null)
-            {
-                return NotFound($"No se encontró la cancha con ID: {id}");
-            }
-
             return Ok(court);
         }
 
@@ -40,33 +34,15 @@ namespace Web.Controllers
         [HttpPost]
         public IActionResult CreateCourt()
         {
-            try
-            {
-                _courtService.CreateCourt();
-                return Ok("La cancha fue creada correctamente");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _courtService.CreateCourt();
+            return Ok("La cancha fue creada correctamente");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteCourt(int id)
         {
-            try
-            {
-                _courtService.DeleteCourt(id);
-                return Ok("La cancha fue eliminada correctamente");
-            }
-            catch (NotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _courtService.DeleteCourt(id);
+            return Ok();
         }
     }
 }

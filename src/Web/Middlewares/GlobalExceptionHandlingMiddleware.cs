@@ -29,6 +29,8 @@ namespace Web.Middlewares
 
                 int statusCode = (int)HttpStatusCode.NotFound; //me traigo el numero correspondiente a un not found
 
+                context.Response.StatusCode = statusCode;
+
                 ProblemDetails problem = new ProblemDetails()
                 {
                     Status = statusCode,
@@ -50,6 +52,8 @@ namespace Web.Middlewares
 
                 int statusCode = (int)HttpStatusCode.BadRequest;
 
+                context.Response.StatusCode = statusCode;
+
                 ProblemDetails problem = new ProblemDetails()
                 {
                     Status = statusCode,
@@ -70,6 +74,8 @@ namespace Web.Middlewares
                 _logger.LogError(ex, ex.Message);
 
                 int statusCode = (int)HttpStatusCode.Unauthorized;
+
+                context.Response.StatusCode = statusCode;
 
                 ProblemDetails problem = new ProblemDetails()
                 {
