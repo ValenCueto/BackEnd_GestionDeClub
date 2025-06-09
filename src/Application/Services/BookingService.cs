@@ -7,6 +7,7 @@ using Application.Interfaces;
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -31,6 +32,21 @@ namespace Application.Services
         {
             List<DateTime> dateList = new List<DateTime>();
             List<Court> courts = _courtRepository.GetAll();
+            if(courts.Count == 0 || courts == null) 
+            {
+                throw new NotFoundException("No hay canchas disponibles.");
+            }
+
+            if(request.StartTime > request.FinishTime)
+            {
+                throw new BadRequestException("La fecha de inicio no puede ser mayor a la de finalización.");
+            }
+
+            if(request.StartTime.Date < DateTime.Today)
+            {
+                throw new BadRequestException("No se pueden crear reservas en fechas pasadas.");
+            }
+
             List<Booking> bookings = _bookingRepository.GetAll();
             DateTime startTime = request.StartTime;
             DateTime finishTime = request.FinishTime;
@@ -43,7 +59,11 @@ namespace Application.Services
             foreach (DateTime date in dateList)
             {
                 DayOfWeek dayOfWeek = date.DayOfWeek;
-                Availability? availability = _availabilityRepository.GetByDay(dayOfWeek) ?? throw new Exception("disponibilidad no existente");
+                Availability? availability = _availabilityRepository.GetByDay(dayOfWeek);
+                if (availability == null)
+                {
+                    throw new NotFoundException("disponibilidad no existente");
+                }
 
                 for (TimeOnly time = availability.StartTime; time.AddMinutes(availability.Duration) <= availability.FinishTime; time = time.AddMinutes(availability.Duration))
                 {
