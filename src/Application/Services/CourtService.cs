@@ -25,7 +25,7 @@ namespace Application.Services
         public CourtResponseDto? GetById(int id)
         {
             var court = _courtRepository.GetById(id);
-            return court != null ? CourtResponseDto.Create(court) : null;
+            return court != null ? CourtResponseDto.Create(court) : throw new NotFoundException($"court with {id} not found");
         }
 
         public void CreateCourt()
@@ -36,7 +36,7 @@ namespace Application.Services
 
         public void DeleteCourt(int courtId)
         {
-            var courtToDelete = _courtRepository.GetById(courtId) ?? throw new NotFoundException("Court", courtId);
+            var courtToDelete = _courtRepository.GetById(courtId) ?? throw new NotFoundException($"court with {courtId} not found");
             _courtRepository.Delete(courtToDelete);
         }
     }

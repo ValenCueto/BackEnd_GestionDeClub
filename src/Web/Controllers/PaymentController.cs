@@ -28,7 +28,7 @@ namespace Web.Controllers
         public IActionResult AssignToAll(int monthlyFeeId)
         {
             _service.AssignFeeToAllUsers(monthlyFeeId);
-            return Ok("Cuotas asignadas a todos los usuarios");
+            return Ok();
         }
 
         [Authorize(Roles = "Admin,Gerente")]
@@ -36,7 +36,7 @@ namespace Web.Controllers
         public IActionResult AssignToUser([FromBody] MarkPaymentRequest request)
         {
             _service.AssignFeeToUser(request.UserId, request.MonthlyFeeId);
-            return Ok("Cuota asignada al usuario");
+            return Ok();
         }
 
         [Authorize]
@@ -44,7 +44,7 @@ namespace Web.Controllers
         public IActionResult MarkAsPaid([FromBody] MarkPaymentRequest request)
         {
             _service.MarkAsPaid(request);
-            return Ok("Pago registrado");
+            return Ok();
         }
 
         [Authorize(Roles = "Admin,Gerente")]

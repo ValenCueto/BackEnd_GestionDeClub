@@ -1,6 +1,7 @@
 ﻿using Application.Interfaces;
 using Application.Models.Request;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
 
 namespace Application.Services
@@ -21,7 +22,8 @@ namespace Application.Services
 
         public Subscription? GetById(int id)
         {
-            return _subscriptionRepository.GetById(id);
+            var result = _subscriptionRepository.GetById(id);
+            return result ?? throw new NotFoundException($"Suscription with {id} not found");
         }
 
         public void CreateSubscription(SubscriptionCreateRequest rq)
@@ -48,6 +50,7 @@ namespace Application.Services
 
                 _subscriptionRepository.Update(subscription);
             }
+            throw new NotFoundException();
         }
 
         public void DeleteSubscription(int subscriptionId)
@@ -58,6 +61,7 @@ namespace Application.Services
             {
                 _subscriptionRepository.Delete(subscription);
             }
+            throw new NotFoundException ();
         }
     }
 }

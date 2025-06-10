@@ -12,11 +12,6 @@ namespace Web.Controllers
     {
         private readonly IMonthlyFeeService _service;
 
-        private int GetAuthenticatedUserId()
-        {
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            return userIdClaim != null ? int.Parse(userIdClaim.Value) : -1;
-        }
         public MonthlyFeeController(IMonthlyFeeService service)
         {
             _service = service;

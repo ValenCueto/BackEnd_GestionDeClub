@@ -22,90 +22,48 @@ namespace Web.Controllers
         [Authorize]
         public IActionResult CreateNews([FromBody] NewsCreateRequest request)
         {
-            try
-            {
-                _newsService.Create(request);
-                return Ok("Noticia creada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _newsService.Create(request);
+            return Ok();
         }
 
         [HttpPut("Update/{id}")]
         [Authorize(Roles = "Admin,CM")]
         public IActionResult UpdateNews(int id, [FromBody] NewsCreateRequest request)
         {
-            try
-            {
-                _newsService.Update(id, request);
-                return Ok("Noticia actualizada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _newsService.Update(id, request);
+            return Ok();
         }
 
         [HttpDelete("Delete/{id}")]
         [Authorize(Roles = "Admin,CM")]
         public IActionResult DeleteNews(int id)
         {
-            try
-            {
-                _newsService.Delete(id);
-                return Ok("Noticia eliminada correctamente.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _newsService.Delete(id);
+            return Ok();
         }
 
         [HttpGet("GetAll")]
         [Authorize]
         public ActionResult<List<NewsDtoResponse>> GetAllNews()
         {
-            try
-            {
-                var result = _newsService.GetAll();
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _newsService.GetAll();
+            return Ok(result);
         }
 
         [HttpGet("GetById/{id}")]
         [Authorize]
         public ActionResult<NewsDtoResponse> GetNewsById(int id)
         {
-            try
-            {
-                var result = _newsService.GetById(id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            var result = _newsService.GetById(id);
+            return Ok(result);
         }
 
         [HttpGet("GetByDate")]
         [Authorize]
         public ActionResult<List<NewsDtoResponse>> GetNewsByDate([FromQuery] DateTime date)
         {
-            try
-            {
-                var result = _newsService.GetByDate(date);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = _newsService.GetByDate(date);
+            return Ok(result);
         }
 
         [HttpPost("UploadImage")]

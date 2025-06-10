@@ -21,15 +21,8 @@ namespace Web.Controllers
         [HttpPost("[Action]")]
         public IActionResult Create([FromBody] AvailabilityInitRequest request)
         {
-            try
-            {
-                _availabilityService.InitDefaultAvailability(request);
-                return Ok("Se han creado las disponibilidades correctamente");
-            }
-            catch (BadRequestException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            _availabilityService.InitDefaultAvailability(request);
+            return Ok();
         }
 
         [HttpGet("[Action]")]
