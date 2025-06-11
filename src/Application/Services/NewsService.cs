@@ -48,13 +48,13 @@ namespace Application.Services
 
         public void Delete(int id)
         {
-            var news = _newsRepository.GetById(id) ?? throw new Exception("Noticia no encontrada");
+            var news = _newsRepository.GetById(id) ?? throw new NotFoundException("Noticia no encontrada");
             _newsRepository.Delete(news);
         }
 
         public List<NewsDtoResponse> GetAll()
         {
-            var newsList = _newsRepository.GetAll() ?? throw new Exception("No hay noticias");
+            var newsList = _newsRepository.GetAll() ?? throw new NotFoundException("No hay noticias");
 
             var response = new List<NewsDtoResponse>();
             foreach (var news in newsList)

@@ -8,7 +8,7 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+   
     public class NewsController : ControllerBase
     {
         private readonly INewsService _newsService;
@@ -43,7 +43,7 @@ namespace Web.Controllers
         }
 
         [HttpGet("GetAll")]
-        [Authorize]
+       
         public ActionResult<List<NewsDtoResponse>> GetAllNews()
         {
             var result = _newsService.GetAll();
