@@ -19,7 +19,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("Create")]
-        [Authorize]
+        [Authorize(Roles = "Admin,CM")]
         public IActionResult CreateNews([FromBody] NewsCreateRequest request)
         {
             _newsService.Create(request);
