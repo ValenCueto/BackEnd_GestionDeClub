@@ -24,8 +24,8 @@ namespace Application.Services
 
         public CourtResponseDto? GetById(int id)
         {
-            var court = _courtRepository.GetById(id);
-            return court != null ? CourtResponseDto.Create(court) : throw new NotFoundException($"court with {id} not found");
+            var court = _courtRepository.GetById(id) ?? throw new NotFoundException($"court with {id} not found");
+            return CourtResponseDto.Create(court);
         }
 
         public void CreateCourt()

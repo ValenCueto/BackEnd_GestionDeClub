@@ -2,6 +2,7 @@
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace Application.Services
 
         public void AssignFeeToAllUsers(int monthlyFeeId)
         {
+            var fee = _monthlyFeeRepository.GetById(monthlyFeeId) ?? throw new NotFoundException("No se ha encontrado una cuota con este ID");
             var users = _userRepository.GetAll();
             foreach (var user in users)
             {
@@ -35,6 +37,9 @@ namespace Application.Services
 
         public void AssignFeeToUser(int userId, int monthlyFeeId)
         {
+            var user = _userRepository.GetById(userId) ?? throw new NotFoundException("No se ha encontrado a un usuario con este ID");
+            var fee = _monthlyFeeRepository.GetById(monthlyFeeId) ?? throw new NotFoundException("No se ha encontrado una cuota con este ID");
+
             if (!_paymentRepository.Exists(userId, monthlyFeeId))
             {
                 var payment = new Payment
@@ -49,8 +54,9 @@ namespace Application.Services
 
         public void MarkAsPaid(MarkPaymentRequest request)
         {
-            var payment = _paymentRepository.GetByUserAndFee(request.UserId, request.MonthlyFeeId);
-            if (payment == null) throw new Exception("No se encontró el registro de pago.");
+            var user = _userRepository.GetById(request.UserId) ?? throw new NotFoundException("No se ha encontrado a un usuario con este ID");
+            var fee = _monthlyFeeRepository.GetById(request.MonthlyFeeId) ?? throw new NotFoundException("No se ha encontrado una cuota con este ID");
+            var payment = _paymentRepository.GetByUserAndFee(request.UserId, request.MonthlyFeeId) ?? throw new NotFoundException("No se encontró el registro de pago.");
 
             payment.Paid = true;
             payment.PaymentDate = DateTime.Now;

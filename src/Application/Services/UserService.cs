@@ -39,7 +39,7 @@ namespace Application.Services
 
         public void UpdateUser(UserUpdateRequest request, int userId)
         {
-            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
+            User userToEdit = _userRepository.GetById(userId) ?? throw new NotFoundException($"El usuario con ID {userId} no fué encontrado");
             var existingUserEmail = _userRepository.GetByEmail(request.Email);
             if (existingUserEmail is not null && existingUserEmail.Id != userId)
             {
@@ -57,7 +57,7 @@ namespace Application.Services
 
         public void UpdateCurrentUser(UserCurrentDtoResponse request, int userId)
         {
-            User userToEdit = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El usuario con ID {userId} no fué encontrado");
+            User userToEdit = _userRepository.GetById(userId) ?? throw new NotFoundException($"El usuario con ID {userId} no fué encontrado");
             var existingUserEmail = _userRepository.GetByEmail(request.Email);
             if (existingUserEmail is not null && existingUserEmail.Id != userId)
             {
@@ -70,20 +70,20 @@ namespace Application.Services
         }
         public void DeleteUser(int userId)
         {
-            User userToDelete = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El user {userId} no fué encontrado");
+            User userToDelete = _userRepository.GetById(userId) ?? throw new NotFoundException($"El user {userId} no fué encontrado");
             _userRepository.Delete(userToDelete);
         }
 
         public void DeactivateUser(int userId)
         {
-            User userToDeactivate = _userRepository.GetById(userId) ?? throw new KeyNotFoundException($"El user {userId} no fué encontrado");
+            User userToDeactivate = _userRepository.GetById(userId) ?? throw new NotFoundException($"El user {userId} no fué encontrado");
             userToDeactivate.State = false;
             _userRepository.Update(userToDeactivate);
         }
 
         public List<UserDtoResponse> GetAll()
         {
-            List<User> users = _userRepository.GetAll() ?? throw new Exception("No hay usuarios");
+            List<User> users = _userRepository.GetAll() ?? throw new BadRequestException("No hay usuarios");
             List<UserDtoResponse> usersFiltered = new List<UserDtoResponse>();
             foreach (User user in users)
             {
@@ -108,8 +108,8 @@ namespace Application.Services
         
         public void AssignBooking(int bookingId, int userId)
         {
-            User user = _userRepository.GetById(userId) ?? throw new Exception("User not Found");
-            Booking booking = _bookingRepository.GetById(bookingId) ?? throw new Exception("Booking not Found");
+            User user = _userRepository.GetById(userId) ?? throw new NotFoundException("User not Found");
+            Booking booking = _bookingRepository.GetById(bookingId) ?? throw new NotFoundException("Booking not Found");
 
             var now = DateTime.Now;
             var currentFee = _monthlyFeeRepository.GetByMonthYear(now.Month, now.Year);
@@ -129,8 +129,8 @@ namespace Application.Services
 
         public void CancelBooking(int bookingId, int userId)
         {
-            User user = _userRepository.GetById(userId) ?? throw new Exception("User not Found");
-            Booking booking = _bookingRepository.GetById(bookingId) ?? throw new Exception("Booking not Found");
+            User user = _userRepository.GetById(userId) ?? throw new NotFoundException("User not Found");
+            Booking booking = _bookingRepository.GetById(bookingId) ?? throw new NotFoundException("Booking not Found");
          
             if (booking.User == null || booking.User.Id != userId)
             {

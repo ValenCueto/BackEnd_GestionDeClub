@@ -64,7 +64,7 @@ namespace Application.Services
 
         public void UpdateAvailability(AvailabilityInitRequest dto, DayOfWeek day)
         {
-            var availabilityToEdit = _availabilityRepository.GetByDay(day);
+            var availabilityToEdit = _availabilityRepository.GetByDay(day) ?? throw new NotFoundException("Disponibilidad no encontrada");
             availabilityToEdit.StartTime = dto.StartTime;
             availabilityToEdit.FinishTime = dto.FinishTime;
             availabilityToEdit.Duration = dto.Duration;
