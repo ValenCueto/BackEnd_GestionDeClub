@@ -2,6 +2,7 @@
 using Application.Models.Request;
 using Application.Models.Response;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,8 @@ namespace Application.Services
 
         public void Update(int id, NewsCreateRequest request)
         {
-            var news = _newsRepository.GetById(id) ?? throw new Exception("Noticia no encontrada");
-
+            var news = _newsRepository.GetById(id) ?? throw new NotFoundException("Noticia no encontrada");
+           
             news.Title = request.Title;
             news.Description = request.Description;
             news.ImageUrl = request.ImageUrl;
@@ -76,7 +77,7 @@ namespace Application.Services
 
         public NewsDtoResponse GetById(int id)
         {
-            var news = _newsRepository.GetById(id) ?? throw new Exception("Noticia no encontrada");
+            var news = _newsRepository.GetById(id) ?? throw new NotFoundException("Noticia no encontrada");
 
             return new NewsDtoResponse
             {
@@ -92,7 +93,7 @@ namespace Application.Services
         //Filtrar por fecha
         public List<NewsDtoResponse> GetByDate(DateTime date)
         {
-            var newsList = _newsRepository.GetByDate(date) ?? throw new Exception("No hay noticias para esa fecha");
+            var newsList = _newsRepository.GetByDate(date) ?? throw new NotFoundException("No hay noticias para esa fecha");
 
             var response = new List<NewsDtoResponse>();
             foreach (var news in newsList)

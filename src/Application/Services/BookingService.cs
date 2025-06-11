@@ -59,12 +59,8 @@ namespace Application.Services
             foreach (DateTime date in dateList)
             {
                 DayOfWeek dayOfWeek = date.DayOfWeek;
-                Availability? availability = _availabilityRepository.GetByDay(dayOfWeek);
-                if (availability == null)
-                {
-                    throw new NotFoundException("disponibilidad no existente");
-                }
-
+                Availability? availability = _availabilityRepository.GetByDay(dayOfWeek) ?? throw new NotFoundException("Disponibilidad no encontrada");
+               
                 for (TimeOnly time = availability.StartTime; time.AddMinutes(availability.Duration) <= availability.FinishTime; time = time.AddMinutes(availability.Duration))
                 {
                     foreach (Court court in courts)

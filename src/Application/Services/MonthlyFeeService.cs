@@ -20,9 +20,11 @@ namespace Application.Services
 
         public int Create(MonthlyFeeCreateRequest request)
         {
-            if (_repository.GetByMonthYear(request.Month, request.Year) != null)
-                throw new Exception("Ya existe una cuota para ese mes y año.");
-
+            if (_repository.GetByMonthYear(request.Month, request.Year) != null) 
+            {
+                throw new BadRequestException("Ya existe una cuota para ese mes y año.");
+            }
+                
             var dueDate = new DateTime(request.Year, request.Month, 10);
 
             var fee = new MonthlyFee
