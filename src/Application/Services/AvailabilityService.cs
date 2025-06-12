@@ -55,7 +55,7 @@ namespace Application.Services
                 dto.StartTime = availability.StartTime;
                 dto.FinishTime = availability.FinishTime;
                 dto.Duration = availability.Duration;
-
+                dto.id = availability.Id;
                 response.Add(dto);
             }
 
