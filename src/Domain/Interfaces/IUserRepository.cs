@@ -1,0 +1,17 @@
+﻿using Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domain.Interfaces
+{
+    public interface IUserRepository: IBaseRepository<User>
+    {
+        User? GetByName(string userName);
+        User? GetByEmail(string email);
+        Task<User?> GetByResetTokenAsync(string token);
+        List<User> GetActiveUsers();
+    }
+}
