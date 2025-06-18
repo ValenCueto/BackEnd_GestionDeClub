@@ -82,9 +82,9 @@ namespace Application.Services
             }).ToList();
         }
 
-        public decimal GetCurrentMonthRevenue()
+        public decimal GetMonthlyRevenue(int month, int year)
         {
-            return _paymentRepository.GetCurrentMonthRevenue();
+            return _paymentRepository.GetMonthlyRevenue(month, year);
         }
 
         private string MesNombre(int mes)
