@@ -14,6 +14,6 @@ namespace Application.Interfaces
         void AssignFeeToUser(int userId, int monthlyFeeId);
         void MarkAsPaid(MarkPaymentRequest request);
         List<PaymentDtoResponse> GetByUserId(int userId);
-        decimal GetCurrentMonthRevenue();
+        decimal GetMonthlyRevenue(int month, int year);
     }
 }
