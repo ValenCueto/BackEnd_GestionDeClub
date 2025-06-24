@@ -7,7 +7,6 @@ using Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Services
@@ -15,10 +14,12 @@ namespace Application.Services
     public class NewsService : INewsService
     {
         private readonly INewsRepository _newsRepository;
+        private readonly IImageService _imageService;
 
-        public NewsService(INewsRepository newsRepository)
+        public NewsService(INewsRepository newsRepository, IImageService imageService)
         {
             _newsRepository = newsRepository;
+            _imageService = imageService;
         }
 
         public void Create(NewsCreateRequest request)
@@ -37,7 +38,7 @@ namespace Application.Services
         public void Update(int id, NewsCreateRequest request)
         {
             var news = _newsRepository.GetById(id) ?? throw new NotFoundException("Noticia no encontrada");
-           
+
             news.Title = request.Title;
             news.Description = request.Description;
             news.ImageUrl = request.ImageUrl;
@@ -49,6 +50,13 @@ namespace Application.Services
         public void Delete(int id)
         {
             var news = _newsRepository.GetById(id) ?? throw new NotFoundException("Noticia no encontrada");
+
+            if (!string.IsNullOrEmpty(news.ImageUrl))
+            {
+                var publicId = ObtenerPublicIdDesdeUrl(news.ImageUrl);
+                _imageService.DeleteImageAsync(publicId).Wait();
+            }
+
             _newsRepository.Delete(news);
         }
 
@@ -74,7 +82,6 @@ namespace Application.Services
             return response;
         }
 
-
         public NewsDtoResponse GetById(int id)
         {
             var news = _newsRepository.GetById(id) ?? throw new NotFoundException("Noticia no encontrada");
@@ -89,8 +96,6 @@ namespace Application.Services
             };
         }
 
-
-        //Filtrar por fecha
         public List<NewsDtoResponse> GetByDate(DateTime date)
         {
             var newsList = _newsRepository.GetByDate(date) ?? throw new NotFoundException("No hay noticias para esa fecha");
@@ -113,7 +118,16 @@ namespace Application.Services
             return response;
         }
 
+        private string ObtenerPublicIdDesdeUrl(string imageUrl)
+        {
+            var uri = new Uri(imageUrl);
+            var path = uri.AbsolutePath; // /club-news/nombre.jpg
+            var parts = path.Split('/');
+            var filename = Path.GetFileNameWithoutExtension(parts.Last());
 
-
+            return parts.Length >= 2
+                ? $"{parts[^2]}/{filename}"
+                : filename;
+        }
     }
 }
