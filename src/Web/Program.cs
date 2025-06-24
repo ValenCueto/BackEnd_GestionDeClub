@@ -97,6 +97,7 @@ builder.Services.AddScoped<IMonthlyFeeService, MonthlyFeeService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IRecoverPassword, RecoverPassword>();
+builder.Services.AddScoped<IImageService, CloudinaryImageService>();
 
 //MERCADOPAGO
 builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
@@ -127,7 +128,7 @@ app.UseSwaggerUI();
 //}
 
 
-app.UseStaticFiles();
+// app.UseStaticFiles();  no lo necesito mas
 
 app.UseHttpsRedirection();
 
