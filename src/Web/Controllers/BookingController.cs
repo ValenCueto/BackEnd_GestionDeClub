@@ -35,11 +35,19 @@ namespace Web.Controllers
             return Ok(bookings);
         }
 
-        [Authorize(Roles = "Gerente")]
+        [Authorize(Roles = "Gerente,Admin")]
         [HttpGet("[Action]")]
         public IActionResult GetMostFrequentBookingHours()
         {
                 return Ok(_bookingService.GetMostFrequentBookingHours());
         }
+
+        [HttpGet("[Action]")]
+        public IActionResult GetBookingCountByMonth([FromQuery] int month, [FromQuery] int year)
+        {
+            int count = _bookingService.GetBookingCountByMonth(month, year);
+            return Ok(count);
+        }
+
     }
 }

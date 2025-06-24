@@ -14,5 +14,6 @@ namespace Application.Interfaces
         void CreateBooking(BookingCreateRequest request);
         List<BookingResponseDto> GetAllBookings();
         List<HourUsageDtoResponse> GetMostFrequentBookingHours();
+        int GetBookingCountByMonth(int month, int year);
     }
 }

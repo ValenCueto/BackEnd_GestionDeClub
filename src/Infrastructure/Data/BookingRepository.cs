@@ -40,5 +40,13 @@ namespace Infrastructure.Data
                 .ToList();
         }
 
+        public int CountBookingsByMonth(int month, int year)
+        {
+            return _dbContext.Bookings
+                .Where(b => b.StartTime.Month == month && b.StartTime.Year == year && b.User != null)
+                .Count();
+        }
+
+
     }
 }
