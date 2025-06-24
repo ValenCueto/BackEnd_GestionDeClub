@@ -97,7 +97,7 @@ namespace Web.Controllers
             return Ok(users);
         }
 
-        [Authorize(Roles = "Client,Admin")]
+        [Authorize]
         [HttpGet("[Action]")]
         public IActionResult GetCurrentUser()
         {
@@ -105,7 +105,7 @@ namespace Web.Controllers
             return Ok(_userService.GetCurrent(userId));
         }
 
-        [Authorize(Roles = "Client,Admin")]
+        [Authorize]
         [HttpPut("AssignBooking/{bookingId}")]
         public IActionResult AssignBooking(int bookingId)
         {
@@ -121,7 +121,7 @@ namespace Web.Controllers
             }            
         }
 
-        [Authorize(Roles = "Client,Admin")]
+        [Authorize]
         [HttpPut("CancelBooking/{bookingId}")]
         public IActionResult CancelBooking(int bookingId)
         {
@@ -130,7 +130,7 @@ namespace Web.Controllers
                return Ok();
         }
 
-        [Authorize(Roles = "Client,Admin")]
+        [Authorize]
         [HttpPut("[Action]")]
         public IActionResult MarkUserPaid()
         {
