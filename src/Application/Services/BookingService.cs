@@ -107,6 +107,22 @@ namespace Application.Services
             return responseList;
         }
 
+        public int GetBookingCountByMonth(int month, int year)
+        {
+            if (month < 1 || month > 12)
+            {
+                throw new BadRequestException("El mes debe estar entre 1 y 12.");
+            }
+
+            if (year > DateTime.Now.Year + 1)
+            {
+                throw new BadRequestException("Año no válido.");
+            }
+
+            return _bookingRepository.CountBookingsByMonth(month, year);
+        }
+
+
 
 
     }

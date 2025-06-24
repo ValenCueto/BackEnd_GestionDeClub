@@ -11,5 +11,6 @@ namespace Domain.Interfaces
     {
         List<Booking> GetAllBookings();
         List<(int Hour, int Count)> GetMostFrequentBookingHours();
+        int CountBookingsByMonth(int month, int year);
     }
 }

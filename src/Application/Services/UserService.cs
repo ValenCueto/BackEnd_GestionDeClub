@@ -121,6 +121,10 @@ namespace Application.Services
             if (payment == null || !payment.Paid)
                 throw new BadRequestException("No podes reservar porque no tenes la cuota del mes paga.");
 
+            if (booking.StartTime.Month != now.Month || booking.StartTime.Year != now.Year)
+                throw new BadRequestException("Solo podés reservar turnos dentro del mes actual.");
+
+
             user.AddBooking(booking);
             booking.User = user;
             booking.Available = false;

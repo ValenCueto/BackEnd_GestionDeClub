@@ -139,7 +139,7 @@ namespace Web.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Gerente")]
+        [Authorize(Roles = "Gerente,Admin")]
         [HttpGet("[Action]")]
         public IActionResult GetActivesUsers()
         {

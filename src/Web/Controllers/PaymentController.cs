@@ -62,7 +62,7 @@ namespace Web.Controllers
             return Ok(_service.GetByUserId(userId));
         }
 
-        [Authorize(Roles = "Gerente")]
+        [Authorize(Roles = "Gerente,Admin")]
         [HttpGet("[Action]")]
         public IActionResult GetMonthlyRevenue(int month, int year)
         {
