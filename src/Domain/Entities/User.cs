@@ -13,14 +13,14 @@ namespace Domain.Entities
         public Rol Rol { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public bool State { get; set; }
         public bool Paid { get; set; }
         public Subscription Subscription { get; set; }
         public string? ResetPasswordToken { get; set; }
         public DateTime? ResetPasswordTokenExpiry { get; set; }
 
-        public User(string name, string email, string password, int phoneNumber, int? subscriptionId)
+        public User(string name, string email, string password, string phoneNumber, int? subscriptionId)
         {
             Name = name;
             Email = email;

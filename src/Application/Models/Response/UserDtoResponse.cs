@@ -9,7 +9,7 @@ namespace Application.Models.Response
         public string Name {  get; set; }
         public Rol Rol { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public bool State {  get; set; }
         public Subscription Subscription { get; set; }
 

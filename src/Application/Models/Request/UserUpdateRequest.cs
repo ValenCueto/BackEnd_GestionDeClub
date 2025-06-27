@@ -12,7 +12,7 @@ namespace Application.Models.Request
         public int? SubscriptionId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public Rol Rol { get; set; }
         public bool State {  get; set; }
     }
